@@ -60,34 +60,34 @@ const projectData = [
         image: "/images/projects/parallax.png",
         tag: ["All", "Front-End"],
         gitUrl: "https://github.com/Shubhranshu331/Parallax-React.JS-and-scss",
-        previewUrl: "/"
+        previewUrl: "https://parallax-react-js-and-scss.vercel.app/"
     },
+    // {
+    //     id: 7,
+    //     title: "Space parallax",
+    //     description: "A static front-end application built using CSS and React. The main feature of the application is its visually captivating parallax effects, which are used to create an immersive experience focused on the description of terrestrial bodies.",
+    //     image: "/images/projects/space.png",
+    //     tag: ["All", "Front-End"],
+    //     gitUrl: "/",
+    //     previewUrl: "/"
+    // },
     {
         id: 7,
-        title: "Space parallax",
-        description: "A static front-end application built using CSS and React. The main feature of the application is its visually captivating parallax effects, which are used to create an immersive experience focused on the description of terrestrial bodies.",
-        image: "/images/projects/space.png",
-        tag: ["All", "Front-End"],
-        gitUrl: "/",
-        previewUrl: "/"
-    },
-    {
-        id: 8,
         title: "Batman and chill",
         description: "A static front-end web application designed to mimic the user interface of Netflix. Built using HTML, CSS, and JavaScript, this application provides a visually appealing platform for users to browse through a variety of video content, even though it does not support streaming functionalities.",
         image: "/images/projects/Netflix_clone.png",
         tag: ["All", "Front-End"],
         gitUrl: "https://github.com/Shubhranshu331/Netflix-Clone",
-        previewUrl: "/"
+        previewUrl: "https://netflix-clone-weld-six-44.vercel.app/"
     },
     {
-        id: 9,
+        id: 8,
         title: "Assignment0",
         description: "A front-end web application designed to streamline the process of accepting and providing assignments. Built using HTML, CSS, and JavaScript, the application offers an intuitive and user-friendly interface for both students and instructors.",
         image: "/images/projects/assignment0.png",
         tag: ["All", "Front-End"],
         gitUrl: "https://github.com/Shubhranshu331/Assignment0",
-        previewUrl: "/"
+        previewUrl: "https://github.com/Shubhranshu331/Assignment0"
     }
 ]
 
