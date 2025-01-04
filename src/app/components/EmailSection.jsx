@@ -51,8 +51,8 @@ const EmailSection = () => {
           <h3 className="text-5xl font-bold text-white my-2">Let&apos;s Connect !!</h3>
           <br />
           <p className="text-[#ADB7BE] mb-4 max-w-md ">
-            I'm currently looking for new opportunities, my inbox is always
-            open. Whether you have a question or just want to say hi, I'll
+            I&apos;m currently looking for new opportunities, my inbox is always
+            open. Whether you have a question or just want to say hi, I&apos;ll
             try my best to get back to you!
           </p>
           <div className="socials flex flex-row gap-2">

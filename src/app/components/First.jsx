@@ -25,7 +25,7 @@ const First = () => {
                         {/* Main heading */}
                         <h1 className="text-white mb-4 text-4xl sm:text-2xl lg:text-5xl lg:leading-normal font-extrabold">
                             <span className="text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 to-yellow-400 ">
-                                Hey There, I'm{" "}</span>
+                                Hey There, I&apos;m{" "}</span>
                             <br />
 
                             {/* Type Animation */}
