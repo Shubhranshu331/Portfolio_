@@ -87,7 +87,7 @@ const First = () => {
 
                             {/* Profile picture */}
                             <Image
-                                src="/images/shubhranshu_pic.png"
+                                src="/images/Shubhranshu_pic.png"
                                 alt="Profile pic"
                                 className="absolute transform -translate-x-1/2 -translate-y-2/3 top-3/4 left-1/2"
                                 height={325}
