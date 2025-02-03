@@ -113,7 +113,7 @@ const ProjectSection = () => {
         <section>
             <div id="myprojects" className="items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-10 ">
                 <Image src="/images/My_Projects.png" width={1000} height={100} className="mt-8 mb-2 " alt='Project_snap'/>
-                <div className="text-white flex flex-row justify-center items-center gap-2 py-6 sm:hidden">
+                <div className="text-white flex flex-row justify-center items-center gap-2 py-6">
                     <ProjectTag onClick={handleTagChange} tag="All" isSelected={tag === "All"} />
                     <ProjectTag onClick={handleTagChange} tag="Front-End" isSelected={tag === "Front-End"} />
                     <ProjectTag onClick={handleTagChange} tag="Machine Learning" isSelected={tag === "Machine Learning"} />
