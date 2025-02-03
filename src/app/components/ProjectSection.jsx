@@ -14,8 +14,8 @@ const projectData = [
         description: "A sleek and modern personal portfolio built with Next.js and deployed on Vercel. Responsive Design: Optimized for all devices. Dynamic Content: Using Next.jsdynamic routing. SEO Friendly: Incorporates SEO best practices. Fast Load Times.",
         image: "/images/projects/portfolio.png",
         tag: ["All", "Front-End"],
-        gitUrl: "https://github.com/Shubhranshu331/Portfolio",
-        previewUrl: "/"
+        gitUrl: "https://github.com/Shubhranshu331/Portfolio_",
+        previewUrl: "https://www.shubhranshu.me/"
     },
     {
         id: 2,
@@ -24,7 +24,7 @@ const projectData = [
         image: "/images/projects/unet.png",
         tag: ["All", "Machine Learning", "Deep Learning"],
         gitUrl: "https://github.com/Shubhranshu331/Polyp--Image_segmentation-UNET-",
-        previewUrl: "/"
+        previewUrl: "https://github.com/Shubhranshu331/Polyp--Image_segmentation-UNET-"
     },
     {
         id: 3,
@@ -33,7 +33,7 @@ const projectData = [
         image: "/images/projects/tictactoe.png",
         tag: ["All", "Android App"],
         gitUrl: "https://github.com/Shubhranshu331/TicTacToeApp-java-",
-        previewUrl: "/"
+        previewUrl: "https://github.com/Shubhranshu331/TicTacToeApp-java-"
     },
     {
         id: 4,
@@ -42,16 +42,16 @@ const projectData = [
         image: "/images/projects/handwritten.png",
         tag: ["All", "Machine Learning"],
         gitUrl: "https://github.com/Shubhranshu331/Handwritten-Digit-Recognition",
-        previewUrl: "/"
+        previewUrl: "https://github.com/Shubhranshu331/Handwritten-Digit-Recognition"
     },
     {
         id: 5,
         title: "Amazon food review analysis",
         description: "A machine learning model to perform sentiment analysis on Amazon food reviews. The model is designed to classify reviews into positive, negative, or neutral sentiments, helping to understand customer feedback and improve product offerings.",
-        image: "/images/projects/portfolio.png",
+        image: "/images/projects/sentiment.png",
         tag: ["All", "Machine Learning"],
         gitUrl: "https://github.com/Shubhranshu331/Sentiment-Analysis",
-        previewUrl: "/"
+        previewUrl: "https://github.com/Shubhranshu331/Sentiment-Analysis"
     },
     {
         id: 6,
@@ -113,7 +113,7 @@ const ProjectSection = () => {
         <section>
             <div id="myprojects" className="items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-10 ">
                 <Image src="/images/My_Projects.png" width={1000} height={100} className="mt-8 mb-2 " alt='Project_snap'/>
-                <div className="text-white flex flex-row justify-center items-center gap-2 py-6">
+                <div className="text-white flex flex-row justify-center items-center gap-2 py-6 sm:px">
                     <ProjectTag onClick={handleTagChange} tag="All" isSelected={tag === "All"} />
                     <ProjectTag onClick={handleTagChange} tag="Front-End" isSelected={tag === "Front-End"} />
                     <ProjectTag onClick={handleTagChange} tag="Machine Learning" isSelected={tag === "Machine Learning"} />
