@@ -22,7 +22,7 @@ const projectData = [
         title: "Detection of polyp in colonoscopy images",
         description: "The model utilizes a unit architecture, known for its robustness in medical image analysis, to achieve high accuracy in identifying polyps.various usages of this project are: Early Diagnosis,Enhancing Accuracy, Supporting Gastroenterologists, Medical Research, Education and Training, Real-time Analysis",
         image: "/images/projects/unet.png",
-        tag: ["All", "Machine Learning", "Deep Learning"],
+        tag: ["All", "Machine Learning"],
         gitUrl: "https://github.com/Shubhranshu331/Polyp--Image_segmentation-UNET-",
         previewUrl: "https://github.com/Shubhranshu331/Polyp--Image_segmentation-UNET-"
     },
@@ -31,7 +31,7 @@ const projectData = [
         title: "Tic-Tac-Toe app",
         description: "An Android application designed to play the classic Tic Tac Toe game. It's a simple yet engaging app that allows users to play against an AI opponent or another player. The application aims to provide an intuitive and fun gaming experience, suitable for all ages.",
         image: "/images/projects/tictactoe.png",
-        tag: ["All", "Android App"],
+        tag: ["All", "Android"],
         gitUrl: "https://github.com/Shubhranshu331/TicTacToeApp-java-",
         previewUrl: "https://github.com/Shubhranshu331/TicTacToeApp-java-"
     },
@@ -110,15 +110,15 @@ const ProjectSection = () => {
       };
 
     return (
-        <section>
-            <div id="myprojects" className="items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-10 ">
+        <section id="myprojects">
+            <div  className="items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-10 ">
                 <Image src="/images/My_Projects.png" width={1000} height={100} className="mt-8 mb-2 " alt='Project_snap'/>
                 <div className="text-white flex flex-row justify-center items-center gap-2 py-6 ">
                     <ProjectTag onClick={handleTagChange} tag="All" isSelected={tag === "All"} />
                     <ProjectTag onClick={handleTagChange} tag="Front-End" isSelected={tag === "Front-End"} />
                     <ProjectTag onClick={handleTagChange} tag="Machine Learning" isSelected={tag === "Machine Learning"} />
-                    <ProjectTag onClick={handleTagChange} tag="Deep Learning" isSelected={tag === "Deep Learning"} />
-                    <ProjectTag onClick={handleTagChange} tag="Android App" isSelected={tag === "Android App"} />
+                    {/* <ProjectTag onClick={handleTagChange} tag="DL" isSelected={tag === "Deep Learning"} /> */}
+                    <ProjectTag onClick={handleTagChange} tag="Android" isSelected={tag === "Android"} />
                 </div>
                 <ul ref={ref} className="grid md:grid-cols-3 gap-8 md:gap-12">{filteredProject.map((project, index) => (
 
