@@ -60,14 +60,14 @@ const First = () => {
                             
                             {/* Domain resume buttons */}
                             <Link
-                                href="/resume/Shubhranshu_FE_Resume.pdf"
+                                href="/Shubhranshu_FE_Resume.pdf"
                                 className="px-1 inline-block py-1 w-full sm:w-fit rounded-full mr-2 bg-gradient-to-br from-yellow-200 to-yellow-400 bg-transparent hover:bg-slate-800 text-white mt-3">
                                 <span className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
                                     FrontEnd Resume
                                 </span>
                             </Link>
                             <Link
-                                href="/resume/Shubhranshu_ML_Resume.pdf"
+                                href="/Shubhranshu_ML_Resume.pdf"
                                 className="px-1 inline-block py-1 w-full sm:w-fit rounded-full mr-2 bg-gradient-to-br from-yellow-200 to-yellow-400 bg-transparent hover:bg-slate-800 text-white mt-3">
                                 <span className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
                                     ML Resume
