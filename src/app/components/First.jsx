@@ -39,8 +39,6 @@ const First = () => {
                                     1000,
                                     'Data Scientist',
                                     1000,
-                                    'Android Developer',
-                                    1000
                                 ]}
                                 wrapper="span"
                                 speed={60}
@@ -60,17 +58,10 @@ const First = () => {
                             
                             {/* Domain resume buttons */}
                             <Link
-                                href="/Shubhranshu_FE_Resume.pdf"
+                                href="/Shubhranshu_Resume.pdf"
                                 className="px-1 inline-block py-1 w-full sm:w-fit rounded-full mr-2 bg-gradient-to-br from-yellow-200 to-yellow-400 bg-transparent hover:bg-slate-800 text-white mt-3">
                                 <span className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
                                     FrontEnd Resume
-                                </span>
-                            </Link>
-                            <Link
-                                href="/Shubhranshu_ML_Resume.pdf"
-                                className="px-1 inline-block py-1 w-full sm:w-fit rounded-full mr-2 bg-gradient-to-br from-yellow-200 to-yellow-400 bg-transparent hover:bg-slate-800 text-white mt-3">
-                                <span className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
-                                    ML Resume
                                 </span>
                             </Link>
                         </div>
@@ -87,7 +78,7 @@ const First = () => {
 
                             {/* Profile picture */}
                             <Image
-                                src="/images/Shubhranshu_pic.png"
+                                src="/images/Shubhranshu_Pic.jpg"
                                 alt="Profile pic"
                                 className="absolute transform -translate-x-1/2 -translate-y-2/3 top-3/4 left-1/2"
                                 height={325}
