@@ -46,7 +46,7 @@ const First = () => {
                             />
                         </h1>
                         {/* Overview */}
-                        <p className="text-[#CCD3DD] text-lg lg:text-3">Computer Science Engineer with a strong background in C, Python, Java, and R. Seeking roles in Machine Learning, Deep Learning, Front-end Development, or Data Science. Proficient in TensorFlow, PyTorch, ReactJS, NextJS, NodeJS, and MongoDB. Enthusiastic about collaborating with dynamic teams to drive innovative solutions.</p>
+                        <p className="text-[#CCD3DD] text-lg lg:text-3">Computer Science Engineer with a strong background in C, Python, and R. Seeking roles in Machine Learning, Deep Learning, Front-end Development, or Data Science. Proficient in TensorFlow, PyTorch, ReactJS, NextJS, NodeJS, and MongoDB. Enthusiastic about collaborating with dynamic teams to drive innovative solutions.</p>
                         <div>
                             <br /><br />
                             {/* Hire me button */}
@@ -61,7 +61,7 @@ const First = () => {
                                 href="/Shubhranshu_Resume.pdf"
                                 className="px-1 inline-block py-1 w-full sm:w-fit rounded-full mr-2 bg-gradient-to-br from-yellow-200 to-yellow-400 bg-transparent hover:bg-slate-800 text-white mt-3">
                                 <span className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
-                                    FrontEnd Resume
+                                    Resume
                                 </span>
                             </Link>
                         </div>
