@@ -47,7 +47,7 @@ const navLinks = [
     ),
   },
   {
-    title: 'Skillset',
+    title: 'Skillsets',
     path: '#skillset',
     icon: (
       <svg
@@ -127,7 +127,7 @@ const navLinks = [
     ),
   },
   {
-    title: 'Contact',
+    title: 'Connect',
     path: '#contact',
     icon: (
       <svg
