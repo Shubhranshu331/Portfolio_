@@ -3,6 +3,75 @@
 @tailwind utilities;
 
 :root {
+  --background: #f6f0e6;
+  --foreground: #171717;
+  --heading: #1d2e3f;
+  --cta-border: #5e2a3a;
+  --cta-hover: #9c8f75;
+  --icon-detail: #222222;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Lato', Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading);
+  font-family: 'Raleway', Arial, Helvetica, sans-serif;
+}
+
+.call-to-action {
+  border: 2px solid var(--cta-border);
+  transition: border-color 0.3s ease;
+}
+
+.call-to-action:hover {
+  border-color: var(--cta-hover);
+}
+
+.icon, .detail {
+  color: var(--icon-detail);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom Scrollbar for WebKit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e8e1d5; /* Slightly lighter than #f6f0e6 for subtle contrast */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #aca079; /* Matches CTA border color */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9c8f75; /* Matches CTA hover color */
+}
+
+/* Basic scrollbar styling for Firefox */
+html {
+  scrollbar-color: #aca079 #e8e1d5;
+  scrollbar-width: thin;
+}
+
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -24,4 +93,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
+} */
