@@ -188,9 +188,9 @@ const Navbar = () => {
           >
             <Link href="/" className="flex items-center space-x-3">
               {/* Logo (LoadingLogo.mp4 Video) */}
-              <div className="rounded-full w-[80px] h-[80px] relative border-[0.04em] border-[#5e2a3a] overflow-hidden">
+              <div className="rounded-full w-[60px] h-[60px] relative border-[0.04em] overflow-hidden">
                 <video
-                  src="/video/LoadingLogo.mp4"
+                  src="/video/NavLogo.mp4"
                   className="rounded-full absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover w-full h-full"
                   autoPlay
                   muted
