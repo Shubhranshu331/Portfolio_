@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import AboutSection from "./components/AboutSection";
 import ProjectSection from "./components/ProjectSection";
 import EmailSection from "./components/EmailSection";
+import SkillsetSection from "./components/SkillsetSection";
 // import AchievementsSection from "./components/AchievementsSection";
 import Footer from "./components/Footer";
 
@@ -16,6 +17,7 @@ export default function Home() {
         <LoadingLogo/>
           <First />
           <AboutSection />
+          <SkillsetSection/>
           <ProjectSection />
           {/* <AchievementsSection /> */}
           <EmailSection />
