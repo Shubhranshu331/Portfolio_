@@ -7,7 +7,7 @@ const skills = [
   {
     title: "Programming Languages",
     description: (
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-0.5rem">
         <ul className="list-none">
           <li>Python</li>
           <li>Java</li>
@@ -23,7 +23,7 @@ const skills = [
   {
     title: "Machine Learning",
     description: (
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-0.5rem">
         <ul className="list-none">
           <li>Tensorflow</li>
           <li>Pytorch</li>
@@ -43,7 +43,7 @@ const skills = [
   {
     title: "Web Development",
     description: (
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-0.5rem">
         <ul className="list-none">
           <li>Next.JS</li>
           <li>React.JS</li>
@@ -62,7 +62,7 @@ const skills = [
   {
     title: "Concepts",
     description: (
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-0.5rem">
         <ul className="list-none">
           <li>SEO Optimization</li>
           <li>Responsive Design</li>
@@ -76,7 +76,7 @@ const skills = [
         </ul>
       </div>
     ),
-    image: "",
+    image: "/images/Skills/skill4.png",
   },
 ];
 
@@ -88,18 +88,18 @@ const SkillsetSection = () => {
   };
 
   const gridTemplateColumns = skills
-    .map((_, i) => (i === activeIndex ? "10fr" : "1fr"))
+    .map((_, i) => (i === activeIndex ? "3fr" : "1fr"))
     .join(" ");
 
   return (
-    <section id="skillset" className="relative bg-[#f6f0e6] px-4 xl}px-16 py-8 sm:py-16 py">
+    <section id="skillset" className="relative bg-[#f6f0e6] px-[2vw] sm:px-[4vw] lg:px-[8vw] py-[4vh] sm:py-[6vh]">
       {/* Headings */}
-      <h1 className="font-raleway font-bold text-5xl text-[#5e2a3a] text-center">
-        My SkillSet 
+      <h1 className="font-raleway font-bold text-[clamp(2rem,5vw,2.5rem)] sm:text-[clamp(2.5rem,5vw,3rem)] lg:text-[clamp(3rem,5vw,3.5rem)] text-[#5e2a3a] text-center mb-[2vh] sm:mb-[3vh]">
+        My SkillSet
       </h1>
       {/* Main Content */}
       <motion.div
-        className="mt-2 flex flex-col items-center justify-center"
+        className="mt-[1vh] flex flex-col items-center justify-center"
         initial={{ opacity: 0, scale: 0.5 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: false }}
@@ -107,13 +107,13 @@ const SkillsetSection = () => {
       >
         {/* Skills Grid */}
         <ul
-          className="grid mt-2 grid-cols-1 md:grid-cols-[10fr_1fr_1fr_1fr] gap-2 max-w-[700px] w-full h-[clamp(400px,40dvh,474px)] md:h-[clamp(450px,50dvh,550px)] mx-auto transform md:transform-none rotate-[-90deg]"
-          style={{ gridTemplateColumns, transition: " grid-template-columns 1s" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[0.5rem] max-w-[92vw] sm:max-w-[80vw] lg:max-w-[70vw] w-full h-auto sm:h-[50vh] lg:h-[55vh] mx-auto"
+          style={{ gridTemplateColumns }}
         >
           {skills.map((skill, index) => (
             <motion.li
               key={index}
-              className={`relative bg-[#f6f0e6] border-[2px] border-[#5e2a3a] rounded-lg overflow-hidden min-w-[80px] md:min-w0 ${index === activeIndex ? "active" : ""}`}
+              className={`relative bg-[#f6f0e6] border-[0.125rem] border-[#5e2a3a] rounded-lg overflow-hidden ${index === activeIndex ? "active" : ""}`}
               onClick={() => handleInteraction(index)}
               onPointerMove={() => handleInteraction(index)}
               onFocus={() => handleInteraction(index)}
@@ -122,9 +122,9 @@ const SkillsetSection = () => {
               viewport={{ once: false }}
               transition={{ duration: 0.6 }}
             >
-              <article className="absolute inset-0 flex flex-col justify-end gap-4 p-4 md:p-[calc(80px*0.5-9px)] pb-4 h-full">
+              <article className="relative flex flex-col justify-between gap-[1rem] p-[1rem] h-full min-h-[30vh] sm:min-h-[40vh] lg:min-h-[50vh]">
                 <h4
-                  className="font-raleway font-extrabold text-[1.1rem] text-[#5e2a3a] uppercase absolute top-[50%] md:top-4 translate-y-[-50%] md:translate-y-0 md:left-[calc(80px*0.25)] md:rotate-90 md:origin-left md:whitespace-nowrap rotate-[-90deg] left-4"
+                  className="font-raleway font-extrabold text-[clamp(1rem,3vw,1.25rem)] sm:text-[clamp(1.25rem,3vw,1.5rem)] text-[#5e2a3a] uppercase text-center"
                   style={{ opacity: index === activeIndex ? 1 : 0.6, transition: "opacity 0.72s" }}
                 >
                   {skill.title}
@@ -135,91 +135,90 @@ const SkillsetSection = () => {
                     style={{
                       transformStyle: "preserve-3d",
                       animation: "spin 6s infinite linear",
-                      width: "6.25rem",
-                      height: "6.25rem",
+                      width: "5rem",
+                      height: "5rem",
                       position: "absolute",
                       top: "20%",
                       left: "50%",
-                      marginLeft: "-3.125rem",
+                      transform: "translateX(-50%) scale(0.8) sm:scale(1)",
                       zIndex: 10,
                       display: index === activeIndex ? "block" : "none",
-                      transform: "scale(0.8) scale(0.6) md:scale(1)",
                     }}
                   >
                     <div
                       className="top"
                       style={{
-                        width: "6.25rem",
-                        height: "6.25rem",
-                        border: "2px solid #5e2a3a",
+                        width: "5rem",
+                        height: "5rem",
+                        border: "0.125rem solid #5e2a3a",
                         backgroundColor: "transparent",
                         opacity: 0.6,
                         position: "absolute",
                         transform: "rotateX(90deg)",
-                        marginTop: "-1.5625rem",
+                        marginTop: "-2.5rem",
                       }}
                     ></div>
                     <div
                       className="right"
                       style={{
-                        width: "6.25rem",
-                        height: "6.25rem",
-                        border: "2px solid #5e2a3a",
+                        width: "5rem",
+                        height: "5rem",
+                        border: "0.125rem solid #5e2a3a",
                         backgroundColor: "transparent",
                         opacity: 0.6,
                         position: "absolute",
                         transform: "rotateY(90deg)",
-                        marginLeft: "1.5625rem",
+                        marginLeft: "2.5rem",
                       }}
                     ></div>
                     <div
                       className="bottom"
                       style={{
-                        width: "6.25rem",
-                        height: "6.25rem",
-                        border: "2px solid #5e2a3a",
+                        width: "5rem",
+                        height: "5rem",
+                        border: "0.125rem solid #5e2a3a",
                         backgroundColor: "transparent",
                         opacity: 0.6,
                         position: "absolute",
                         transform: "rotateX(-90deg)",
-                        marginTop: "1.5625rem",
+                        marginTop: "2.5rem",
                       }}
                     ></div>
                     <div
                       className="left"
                       style={{
-                        width: "6.25rem",
-                        height: "6.25rem",
-                        border: "2px solid #5e2a3a",
+                        width: "5rem",
+                        height: "5rem",
+                        border: "0.125rem solid #5e2a3a",
                         backgroundColor: "transparent",
                         opacity: 0.6,
                         position: "absolute",
                         transform: "rotateY(-90deg)",
-                        marginLeft: "-1.5625rem",
+                        marginLeft: "-2.5rem",
                       }}
                     ></div>
                     <div
                       className="front"
                       style={{
-                        width: "6.25rem",
-                        height: "6.25rem",
-                        border: "2px solid #5e2a3a",
+                        width: "5rem",
+                        height: "5rem",
+                        border: "0.125rem solid #5e2a3a",
                         backgroundColor: "transparent",
                         opacity: 0.6,
                         position: "absolute",
-                        transform: "translateZ(1.5625rem)",
+                        transform: "translateZ(2.5rem)",
                       }}
                     ></div>
                     <div
                       className="back"
                       style={{
-                        width: "6.25rem",
-                        height: "6.25rem",
-                        border: "2px solid #5e2a3a",
+                        width: "5rem",
+                        height: "5rem",
+                        border: "0.125rem solid #5e2a3a",
                         backgroundColor: "transparent",
                         opacity: 0.6,
                         position: "absolute",
-                        transform: "translateZ(-1.5625rem) rotateX(180deg)",
+                        transform: "translateZ(-2.5rem) rotateX(180deg)",
                       }}
                     ></div>
                   </div>
@@ -228,48 +227,40 @@ const SkillsetSection = () => {
                   <div
                     className="container"
                     style={{
-                      position: "absolute",
-                      top: "0%", // Moved to top of grid cell
-                      marginTop: "1rem", // Equivalent to mt-4
-                      left: "50%",
-                      marginLeft: "-3.125rem",
                       display: index === activeIndex ? "flex" : "none",
-                      transform: "scale(0.8) scale(0.6) md:scale(1)",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      position: "absolute",
+                      top: "20%",
+                      left: "50%",
+                      transform: "translateX(-50%) scale(0.8) sm:scale(1)",
                       zIndex: 10,
                     }}
                   >
-                    <div
-                      className="scene"
-                      style={{
-                        width: "6.25rem",
-                        height: "6.25rem",
-                        transformStyle: "preserve-3d",
-                        transform: "rotateX(-20deg) rotateY(20deg)",
-                      }}
-                    >
-                      <div className="webpack-cube" style={{ transformStyle: "preserve-3d", animation: "hoverY 2s infinite alternate ease-in-out" }}>
-                        <div className="outer-cube" style={{ width: "6.25rem", height: "6.25rem", transformStyle: "preserve-3d", animation: "flipY 5.2s infinite" }}>
-                          <div className="face face-top" style={{ transform: "rotateX(90deg) translateZ(3.125rem)", border: "1px solid #5e2a3a", background: "rgba(94, 42, 58, 0.6)", animation: "border-top 5.2s infinite" }}></div>
-                          <div className="face face-bottom" style={{ transform: "rotateX(-90deg) translateZ(3.125rem)", border: "1px solid #5e2a3a", background: "rgba(94, 42, 58, 0.6)" }}></div>
-                          <div className="face face-left" style={{ transform: "rotateY(-90deg) translateZ(3.125rem)", border: "1px solid #5e2a3a", background: "rgba(94, 42, 58, 0.6)", animation: "border-left 5.2s infinite" }}></div>
-                          <div className="face face-right" style={{ transform: "rotateY(90deg) translateZ(3.125rem)", border: "1px solid #5e2a3a", background: "rgba(94, 42, 58, 0.6)" }}></div>
-                          <div className="face face-front" style={{ transform: "translateZ(3.125rem)", border: "1px solid #5e2a3a", background: "rgba(94, 42, 58, 0.6)", animation: "border-front 5.2s infinite" }}></div>
-                          <div className="face face-back" style={{ transform: "rotateY(180deg) translateZ(3.125rem)", border: "1px solid #5e2a3a", background: "rgba(94, 42, 58, 0.6)", animation: "border-back 5.2s infinite" }}></div>
+                    <div className="scene">
+                      <div className="webpack-cube">
+                        <div className="outer-cube">
+                          <div className="face face-top"></div>
+                          <div className="face face-bottom"></div>
+                          <div className="face face-left"></div>
+                          <div className="face face-right"></div>
+                          <div className="face face-front"></div>
+                          <div className="face face-back"></div>
                         </div>
-                        <div className="inner-cube" style={{ width: "6.25rem", height: "6.25rem", transformStyle: "preserve-3d", animation: "flipY-innerCube 5.2s infinite", top: "-2px" }}>
-                          <div className="face face-top" style={{ transform: "rotateX(90deg) translateZ(3.125rem)", border: "2px solid #5e2a3a", background: "#5e2a3a" }}></div>
-                          <div className="face face-bottom" style={{ transform: "rotateX(-90deg) translateZ(3.125rem)", border: "2px solid #5e2a3a", background: "#5e2a3a" }}></div>
-                          <div className="face face-left" style={{ transform: "rotateY(-90deg) translateZ(3.125rem)", border: "2px solid #5e2a3a", background: "#5e2a3a" }}></div>
-                          <div className="face face-right" style={{ transform: "rotateY(90deg) translateZ(3.125rem)", border: "2px solid #5e2a3a", background: "#5e2a3a" }}></div>
-                          <div className="face face-front" style={{ transform: "translateZ(3.125rem)", border: "2px solid #5e2a3a", background: "#5e2a3a" }}></div>
-                          <div className="face face-back" style={{ transform: "rotateY(180deg) translateZ(3.125rem)", border: "2px solid #5e2a3a", background: "#5e2a3a" }}></div>
+                        <div className="inner-cube">
+                          <div className="face face-top"></div>
+                          <div className="face face-bottom"></div>
+                          <div className="face face-left"></div>
+                          <div className="face face-right"></div>
+                          <div className="face face-front"></div>
+                          <div className="face face-back"></div>
                         </div>
                       </div>
-                      <div className="shadows-outer-container" style={{ width: "6.25rem", height: "6.25rem", transform: "translateX(-50%) rotateX(-90deg) translateZ(3.4375rem)", animation: "flipY-outterShadow 5.2s infinite" }}>
-                        <div className="shadow-outer" style={{ width: "6.25rem", height: "6.25rem", backgroundColor: "rgba(94, 42, 58, 0.7)", animation: "scaleBigShadow 2s infinite alternate ease-in-out", boxShadow: "0px 0px 50px 40px rgba(94, 42, 58, 0.7)", transform: "scale3d(0.8, 0.8, 0.8)" }}></div>
+                      <div className="shadows-outer-container">
+                        <div className="shadow-outer"></div>
                       </div>
-                      <div className="shadows-inner-container" style={{ width: "6.25rem", height: "6.25rem", transform: "translateX(-50%) rotateX(-90deg) translateZ(0px) rotateZ(0deg)", animation: "flipY-innerShadow 5.2s infinite" }}>
-                        <div className="shadow-inner" style={{ width: "6.25rem", height: "6.25rem", borderRadius: "15px", background: "radial-gradient(circle, rgba(94, 42, 58, 0.8) 10%, rgba(94, 42, 58, 0.4) 50%, rgba(0, 0, 0, 0) 70%)", animation: "scaleSmallShadow 2s infinite alternate ease-in-out", transform: "scale3d(0.4, 0.4, 0.4)" }}></div>
+                      <div className="shadows-inner-container">
+                        <div className="shadow-inner"></div>
                       </div>
                     </div>
                   </div>
@@ -279,13 +270,12 @@ const SkillsetSection = () => {
                     className="assembly"
                     style={{
                       position: "absolute",
-                      top: "30%",
+                      top: "20%",
                       left: "50%",
-                      marginLeft: "-2.5rem",
-                      width: "5rem",
-                      height: "5rem",
+                      transform: "translateX(-50%) rotateX(-45deg) rotateY(-45deg) scale(0.8) sm:scale(1)",
+                      width: "4rem",
+                      height: "4rem",
                       transformStyle: "preserve-3d",
-                      transform: "rotateX(-45deg) rotateY(-45deg) scale(0.8) scale(0.6) md:scale(1)",
                       zIndex: 10,
                       display: index === activeIndex ? "block" : "none",
                     }}
@@ -319,16 +309,15 @@ const SkillsetSection = () => {
                       position: "absolute",
                       top: "20%",
                       left: "50%",
-                      marginLeft: "-2.5rem",
-                      width: "5rem",
-                      height: "5rem",
+                      transform: "translateX(-50%) scale(0.8) sm:scale(1)",
+                      width: "4rem",
+                      height: "4rem",
                       color: "#5e2a3a",
                       background: "repeating-conic-gradient(from -47deg, transparent 0deg, #5e2a3a 1deg 91deg, transparent 94deg 180deg)",
                       opacity: 0.3,
                       display: index === activeIndex ? "flex" : "none",
                       animation: "l12-0 2s infinite linear",
                       transformStyle: "preserve-3d",
-                      transform: "scale(0.8) scale(0.6) md:scale(1)",
                     }}
                   >
                     <div
@@ -365,7 +354,7 @@ const SkillsetSection = () => {
                   }}
                 />
                 <div
-                  className="font-lato font-extrabold text-[1.1rem] text-[#222222] leading-tight pl-4 md:pl-6 transform md:transform-none rotate-[90deg] translate-x-[-1rem] md:translate-x-0"
+                  className="font-lato font-extrabold text-[clamp(0.75rem,2vw,0.875rem)] sm:text-[clamp(0.875rem,2vw,1rem)] text-[#222222] leading-tight text-center"
                   style={{ opacity: index === activeIndex ? 0.8 : 0, transition: "opacity 0.72s 0.15s" }}
                 >
                   {skill.description}
@@ -376,7 +365,7 @@ const SkillsetSection = () => {
         </ul>
       </motion.div>
 
-      {/* Inline CSS for Cube Animations */}
+      {/* Inline CSS for Animations */}
       <style jsx>{`
         @keyframes spin {
           0% {
@@ -385,119 +374,6 @@ const SkillsetSection = () => {
           100% {
             transform: rotateX(-20deg) rotateY(380deg);
           }
-        }
-        @keyframes flipY {
-          0% { transform: translateX(-50%) scale3d(1,1,1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-          20.25% { transform: translateX(-50%) scale3d(1,1,1) rotateX(0deg) rotateY(90deg) rotateZ(0deg); }
-          100% { transform: translateX(-50%) scale3d(1,1,1) rotateX(0deg) rotateY(90deg) rotateZ(0deg); }
-        }
-        @keyframes flipY-innerCube {
-          0% { transform: translateX(-50%) scale3d(0.5,0.5,0.5) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-          20.25% { transform: translateX(-50%) scale3d(0.5,0.5,0.5) rotateX(0deg) rotateY(-90deg) rotateZ(0deg); }
-          100% { transform: translateX(-50%) scale3d(0.5,0.5,0.5) rotateX(0deg) rotateY(-90deg) rotateZ(0deg); }
-        }
-        @keyframes flipY-innerShadow {
-          0% { transform: translateX(-50%) rotateX(-90deg) translateZ(-20px) rotateZ(0deg); }
-          20.25% { transform: translateX(-50%) rotateX(-90deg) translateZ(-20px) rotateZ(-90deg); }
-          100% { transform: translateX(-50%) rotateX(-90deg) translateZ(-20px) rotateZ(-90deg); }
-        }
-        @keyframes flipY-outterShadow {
-          0% { transform: translateX(-50%) rotateX(-90deg) translateZ(3.4375rem) rotateZ(0deg); }
-          20.25% { transform: translateX(-50%) rotateX(-90deg) translateZ(3.4375rem) rotateZ(90deg); }
-          100% { transform: translateX(-50%) rotateX(-90deg) translateZ(3.4375rem) rotateZ(90deg); }
-        }
-        @keyframes border-front {
-          0% { border-width: 1px 6px 6px 1px; }
-          2.25% { border-width: 1px 6px 6px 1px; }
-          5.75% { border-width: 1px 1px 1px 1px; }
-          100% { border-width: 1px 1px 1px 1px; }
-        }
-        @keyframes border-back {
-          0% { border-width: 1px 1px 1px 1px; }
-          2.25% { border-width: 1px 1px 1px 1px; }
-          5.75% { border-width: 1px 1px 6px 6px; }
-          100% { border-width: 1px 1px 6px 6px; }
-        }
-        @keyframes border-top {
-          0% { border-width: 6px 6px 1px 1px; }
-          2.25% { border-width: 6px 6px 1px 1px; }
-          5.75% { border-width: 1px 6px 6px 1px; }
-          100% { border-width: 1px 6px 6px 1px; }
-        }
-        @keyframes border-left {
-          0% { border-width: 1px 1px 6px 6px; }
-          2.25% { border-width: 1px 1px 6px 6px; }
-          5.75% { border-width: 1px 6px 6px 1px; }
-          100% { border-width: 1px 6px 6px 1px; }
-        }
-        @keyframes hoverY {
-          0% { transform: translateY(0px); }
-          100% { transform: translateY(-30px); }
-        }
-        @keyframes scaleBigShadow {
-          0% { transform: scale3d(0.65, 0.65, 0.65); }
-          100% { transform: scale3d(0.60, 0.60, 0.60); }
-        }
-        @keyframes scaleSmallShadow {
-          0% { transform: scale3d(0.45, 0.45, 0.45); }
-          100% { transform: scale3d(0.37, 0.37, 0.37); }
-        }
-        .container {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .scene {
-          position: relative;
-          transform-style: preserve-3d;
-        }
-        .webpack-cube {
-          transform-style: preserve-3d;
-          animation: hoverY 2s infinite alternate ease-in-out;
-          opacity: 0.4;
-        }
-        .outer-cube {
-          position: relative;
-          left: 0;
-          top: 0;
-          transform-style: preserve-3d;
-          display: inline-block;
-        }
-        .outer-cube .face {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          text-align: center;
-        }
-        .inner-cube {
-          display: inline-block;
-          position: absolute;
-          left: 0;
-          transform-style: preserve-3d;
-        }
-        .inner-cube .face {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          text-align: center;
-        }
-        .shadows-outer-container {
-          display: inline-block;
-          transform-style: preserve-3d;
-        }
-        .shadow-outer {
-          display: inline-block;
-          position: absolute;
-          transform-origin: center center;
-        }
-        .shadows-inner-container {
-          display: inline-block;
-          transform-style: preserve-3d;
-        }
-        .shadow-inner {
-          display: inline-block;
-          position: absolute;
-          transform-origin: center center;
         }
         @keyframes l12-0 {
           0%, 49.9% {
@@ -554,9 +430,211 @@ const SkillsetSection = () => {
             transform: translate3d(2rem, 0, 0);
           }
         }
+        @keyframes flipY {
+          0% { transform: translateX(0) scale3d(1,1,1) rotatex(0deg) rotatey(0deg) rotatez(0deg); }
+          20.25% { transform: translateX(0) scale3d(1,1,1) rotatex(0deg) rotatey(90deg) rotatez(0deg); }
+          100% { transform: translateX(0) scale3d(1,1,1) rotatex(0deg) rotatey(90deg) rotatez(0deg); }
+        }
+        @keyframes flipY-innerCube {
+          0% { transform: translateX(0) scale3d(0.5,0.5,0.5) rotatex(0deg) rotatey(0deg) rotatez(0deg); }
+          20.25% { transform: translateX(0) scale3d(0.5,0.5,0.5) rotatex(0deg) rotatey(-90deg) rotatez(0deg); }
+          100% { transform: translateX(0) scale3d(0.5,0.5,0.5) rotatex(0deg) rotatey(-90deg) rotatez(0deg); }
+        }
+        @keyframes flipY-innerShadow {
+          0% { transform: translatex(0) rotatex(-90deg) translatez(-1.25rem) rotatez(0deg); }
+          20.25% { transform: translatex(0) rotatex(-90deg) translatez(-1.25rem) rotatez(-90deg); }
+          100% { transform: translatex(0) rotatex(-90deg) translatez(-1.25rem) rotatez(-90deg); }
+        }
+        @keyframes flipY-outterShadow {
+          0% { transform: translatex(0) rotatex(-90deg) translatez(6.5625rem) rotatez(0deg); }
+          20.25% { transform: translatex(0) rotatex(-90deg) translatez(6.5625rem) rotatez(90deg); }
+          100% { transform: translatex(0) rotatex(-90deg) translatez(6.5625rem) rotatez(90deg); }
+        }
+        @keyframes border-front {
+          0% { border-width: 0.0625rem 0.375rem 0.375rem 0.0625rem; }
+          2.25% { border-width: 0.0625rem 0.375rem 0.375rem 0.0625rem; }
+          5.75% { border-width: 0.0625rem 0.0625rem 0.0625rem 0.0625rem; }
+          100% { border-width: 0.0625rem 0.0625rem 0.0625rem 0.0625rem; }
+        }
+        @keyframes border-back {
+          0% { border-width: 0.0625rem 0.0625rem 0.0625rem 0.0625rem; }
+          2.25% { border-width: 0.0625rem 0.0625rem 0.0625rem 0.0625rem; }
+          5.75% { border-width: 0.0625rem 0.0625rem 0.375rem 0.375rem; }
+          100% { border-width: 0.0625rem 0.0625rem 0.375rem 0.375rem; }
+        }
+        @keyframes border-top {
+          0% { border-width: 0.375rem 0.375rem 0.0625rem 0.0625rem; }
+          2.25% { border-width: 0.375rem 0.375rem 0.0625rem 0.0625rem; }
+          5.75% { border-width: 0.0625rem 0.375rem 0.375rem 0.0625rem; }
+          100% { border-width: 0.0625rem 0.375rem 0.375rem 0.0625rem; }
+        }
+        @keyframes border-left {
+          0% { border-width: 0.0625rem 0.0625rem 0.375rem 0.375rem; }
+          2.25% { border-width: 0.0625rem 0.0625rem 0.375rem 0.375rem; }
+          5.75% { border-width: 0.0625rem 0.375rem 0.375rem 0.0625rem; }
+          100% { border-width: 0.0625rem 0.375rem 0.375rem 0.0625rem; }
+        }
+        @keyframes hoverY {
+          0% { transform: translatey(0); }
+          100% { transform: translatey(-1.875rem); }
+        }
+        @keyframes scaleBigShadow {
+          0% { transform: scale3d(0.65, 0.65, 0.65); }
+          100% { transform: scale3d(0.60, 0.60, 0.60); }
+        }
+        @keyframes scaleSmallShadow {
+          0% { transform: scale3d(0.45, 0.45, 0.45); }
+          100% { transform: scale3d(0.37, 0.37, 0.37); }
+        }
         .cube {
           transform-style: preserve-3d;
           position: absolute;
+        }
+        .container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .scene {
+          position: relative;
+          width: 5rem;
+          height: 5rem;
+          margin-top: 0;
+          transform-style: preserve-3d;
+          transform: rotatex(-20deg) rotatey(20deg);
+        }
+        .webpack-cube {
+          transform-style: preserve-3d;
+          animation: hoverY 2s infinite alternate;
+          animation-timing-function: ease-in-out;
+        }
+        .outer-cube {
+          position: absolute;
+          width: 5rem;
+          height: 5rem;
+          left: 0;
+          top: 0;
+          transform-style: preserve-3d;
+          animation: flipY 5.2s infinite;
+          display: inline-block;
+        }
+        .outer-cube .face {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          background: rgba(94, 42, 58, 0.2);
+          line-height: 5rem;
+          border: 0.0625rem solid #5e2a3a;
+        }
+        .outer-cube .face-front {
+          transform: translatez(2.5rem);
+          border-right-width: 0.375rem;
+          border-bottom-width: 0.375rem;
+          animation: border-front 5.2s infinite;
+        }
+        .outer-cube .face-back {
+          transform: rotateY(180deg) translatez(2.5rem);
+          animation: border-back 5.2s infinite;
+        }
+        .outer-cube .face-top {
+          transform: rotatex(90deg) translatez(2.5rem);
+          border-top-width: 0.375rem;
+          border-right-width: 0.375rem;
+          animation: border-top 5.2s infinite;
+        }
+        .outer-cube .face-bottom {
+          transform: rotatex(-90deg) translatez(2.5rem);
+        }
+        .outer-cube .face-left {
+          transform: rotateY(-90deg) translatez(2.5rem);
+          border-left-width: 0.375rem;
+          border-bottom-width: 0.375rem;
+          animation: border-left 5.2s infinite;
+        }
+        .outer-cube .face-right {
+          transform: rotateY(90deg) translatez(2.5rem);
+        }
+        .inner-cube {
+          display: inline-block;
+          position: absolute;
+          width: 5rem;
+          height: 5rem;
+          left: 0;
+          top: -0.125rem;
+          transform-style: preserve-3d;
+          animation: flipY-innerCube 5.2s infinite;
+        }
+        .inner-cube .face {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          background: rgba(94, 42, 58, 0.4);
+          line-height: 5rem;
+          border: 0.125rem solid #5e2a3a;
+        }
+        .inner-cube .face-front {
+          transform: translatez(2.5rem);
+        }
+        .inner-cube .face-back {
+          transform: rotateY(180deg) translatez(2.5rem);
+        }
+        .inner-cube .face-top {
+          transform: rotatex(90deg) translatez(2.5rem);
+        }
+        .inner-cube .face-bottom {
+          transform: rotatex(-90deg) translatez(2.5rem);
+        }
+        .inner-cube .face-left {
+          transform: rotateY(-90deg) translatez(2.5rem);
+        }
+        .inner-cube .face-right {
+          transform: rotateY(90deg) translatez(2.5rem);
+        }
+        .shadows-outer-container {
+          display: inline-block;
+          transform-style: preserve-3d;
+          width: 5rem;
+          height: 5rem;
+          transform: translatex(0) rotatex(-90deg) translatez(5.5rem);
+          animation: flipY-outterShadow 5.2s infinite;
+        }
+        .shadow-outer {
+          display: inline-block;
+          position: absolute;
+          width: 5rem;
+          height: 5rem;
+          background-color: rgba(255, 255, 255, 0.4);
+          animation: scaleBigShadow 2s infinite alternate;
+          animation-timing-function: ease-in-out;
+          box-shadow: 0 0 2.8125rem 2.1875rem rgba(255, 255, 255, 0.4);
+          transform-origin: center center;
+          transform: scale3d(0.8, 0.8, 0.8);
+        }
+        .shadows-inner-container {
+          display: inline-block;
+          transform-style: preserve-3d;
+          width: 5rem;
+          height: 5rem;
+          transform: translatex(0) rotatex(-90deg) translatez(0) rotatez(0deg);
+          animation: flipY-innerShadow 5.2s infinite;
+        }
+        .shadow-inner {
+          display: inline-block;
+          position: absolute;
+          width: 5rem;
+          height: 5rem;
+          border-radius: 0.9375rem;
+          background:  
+            linear-gradient(0deg, rgba(0,0,0,0) 10%, rgba(109,109,109,0.5) 50%, rgba(0,0,0,0)),
+            linear-gradient(90deg, rgba(0,0,0,0) 10%, rgba(109,109,109,0.5) 50%, rgba(0,0,0,0)),
+            linear-gradient(180deg, rgba(0,0,0,0) 10%, rgba(109,109,109,0.5) 50%, rgba(0,0,0,0)),
+            linear-gradient(270deg, rgba(0,0,0,0) 10%, rgba(109,109,109,0.5) 50%, rgba(0,0,0,0));
+          animation: scaleSmallShadow 2s infinite alternate;
+          animation-timing-function: ease-in-out;
+          transform-origin: center center;
+          transform: scale3d(0.4, 0.4, 0.4);
         }
         .assembly {
           position: absolute;
@@ -578,13 +656,13 @@ const SkillsetSection = () => {
         }
         .cube__face {
           position: absolute;
-          width: 2rem;
-          height: 2rem;
-          margin: -1rem;
-          border: 1px solid #5e2a3a;
+          width: 1.5rem;
+          height: 1.5rem;
+          margin: -0.75rem;
+          border: 0.0625rem solid #5e2a3a;
           background: transparent;
           opacity: 0.3;
-          box-shadow: inset 0 0 1rem rgba(94, 42, 58, 0.2);
+          box-shadow: inset 0 0 0.625rem rgba(94, 42, 58, 0.2);
           backface-visibility: hidden;
         }
         .cube__face:nth-child(2n) {
@@ -594,65 +672,65 @@ const SkillsetSection = () => {
           filter: brightness(0.97);
         }
         .cube__face:nth-child(1) {
-          transform: rotateY(0deg) translateZ(1rem);
+          transform: rotateY(0deg) translateZ(0.75rem);
         }
         .cube__face:nth-child(2) {
-          transform: rotateY(90deg) translateZ(1rem);
+          transform: rotateY(90deg) translateZ(0.75rem);
         }
         .cube__face:nth-child(3) {
-          transform: rotateY(180deg) translateZ(1rem);
+          transform: rotateY(180deg) translateZ(0.75rem);
         }
         .cube__face:nth-child(4) {
-          transform: rotateY(270deg) translateZ(1rem);
+          transform: rotateY(270deg) translateZ(0.75rem);
         }
         .cube__face:nth-child(5) {
-          transform: rotateX(90deg) translateZ(1rem);
+          transform: rotateX(90deg) translateZ(0.75rem);
         }
         .cube__face:nth-child(6) {
-          transform: rotateX(-90deg) translateZ(1rem);
+          transform: rotateX(-90deg) translateZ(0.75rem);
         }
-        .comp-3d--i .cube:nth-child(1) { transform: translate3d(-2rem, -2rem, 0); }
-        .comp-3d--i .cube:nth-child(2) { transform: translate3d(-2rem, 0, -2rem); }
-        .comp-3d--i .cube:nth-child(3) { transform: translate3d(-2rem, 0, 0); }
-        .comp-3d--i .cube:nth-child(4) { transform: translate3d(-2rem, 0, 2rem); }
-        .comp-3d--i .cube:nth-child(5) { transform: translate3d(-2rem, 2rem, 0); }
-        .comp-3d--i .cube:nth-child(6) { transform: translate3d(0, -2rem, -2rem); }
-        .comp-3d--i .cube:nth-child(7) { transform: translate3d(0, -2rem, 0); }
-        .comp-3d--i .cube:nth-child(8) { transform: translate3d(0, -2rem, 2rem); }
-        .comp-3d--i .cube:nth-child(9) { transform: translate3d(0, 0, -2rem); }
+        .comp-3d--i .cube:nth-child(1) { transform: translate3d(-1.5rem, -1.5rem, 0); }
+        .comp-3d--i .cube:nth-child(2) { transform: translate3d(-1.5rem, 0, -1.5rem); }
+        .comp-3d--i .cube:nth-child(3) { transform: translate3d(-1.5rem, 0, 0); }
+        .comp-3d--i .cube:nth-child(4) { transform: translate3d(-1.5rem, 0, 1.5rem); }
+        .comp-3d--i .cube:nth-child(5) { transform: translate3d(-1.5rem, 1.5rem, 0); }
+        .comp-3d--i .cube:nth-child(6) { transform: translate3d(0, -1.5rem, -1.5rem); }
+        .comp-3d--i .cube:nth-child(7) { transform: translate3d(0, -1.5rem, 0); }
+        .comp-3d--i .cube:nth-child(8) { transform: translate3d(0, -1.5rem, 1.5rem); }
+        .comp-3d--i .cube:nth-child(9) { transform: translate3d(0, 0, -1.5rem); }
         .comp-3d--i .cube:nth-child(10) { transform: translate3d(0, 0, 0); }
-        .comp-3d--i .cube:nth-child(11) { transform: translate3d(0, 0, 2rem); }
-        .comp-3d--i .cube:nth-child(12) { transform: translate3d(0, 2rem, -2rem); }
-        .comp-3d--i .cube:nth-child(13) { transform: translate3d(0, 2rem, 0); }
-        .comp-3d--i .cube:nth-child(14) { transform: translate3d(0, 2rem, 2rem); }
-        .comp-3d--i .cube:nth-child(15) { transform: translate3d(2rem, -2rem, 0); }
-        .comp-3d--i .cube:nth-child(16) { transform: translate3d(2rem, 0, -2rem); }
-        .comp-3d--i .cube:nth-child(17) { transform: translate3d(2rem, 0, 0); }
-        .comp-3d--i .cube:nth-child(18) { transform: translate3d(2rem, 0, 2rem); }
-        .comp-3d--i .cube:nth-child(19) { transform: translate3d(2rem, 2rem, 0); }
+        .comp-3d--i .cube:nth-child(11) { transform: translate3d(0, 0, 1.5rem); }
+        .comp-3d--i .cube:nth-child(12) { transform: translate3d(0, 1.5rem, -1.5rem); }
+        .comp-3d--i .cube:nth-child(13) { transform: translate3d(0, 1.5rem, 0); }
+        .comp-3d--i .cube:nth-child(14) { transform: translate3d(0, 1.5rem, 1.5rem); }
+        .comp-3d--i .cube:nth-child(15) { transform: translate3d(1.5rem, -1.5rem, 0); }
+        .comp-3d--i .cube:nth-child(16) { transform: translate3d(1.5rem, 0, -1.5rem); }
+        .comp-3d--i .cube:nth-child(17) { transform: translate3d(1.5rem, 0, 0); }
+        .comp-3d--i .cube:nth-child(18) { transform: translate3d(1.5rem, 0, 1.5rem); }
+        .comp-3d--i .cube:nth-child(19) { transform: translate3d(1.5rem, 1.5rem, 0); }
         .comp-3d--o .pos:nth-child(1) {
-          transform: scale3d(-1, -1, -1) translate3d(2rem, 2rem, 2rem);
+          transform: scale3d(-1, -1, -1) translate3d(1.5rem, 1.5rem, 1.5rem);
         }
         .comp-3d--o .pos:nth-child(2) {
-          transform: scale3d(-1, -1, 1) translate3d(2rem, 2rem, 2rem);
+          transform: scale3d(-1, -1, 1) translate3d(1.5rem, 1.5rem, 1.5rem);
         }
         .comp-3d--o .pos:nth-child(3) {
-          transform: scale3d(-1, 1, -1) translate3d(2rem, 2rem, 2rem);
+          transform: scale3d(-1, 1, -1) translate3d(1.5rem, 1.5rem, 1.5rem);
         }
         .comp-3d--o .pos:nth-child(4) {
-          transform: scale3d(-1, 1, 1) translate3d(2rem, 2rem, 2rem);
+          transform: scale3d(-1, 1, 1) translate3d(1.5rem, 1.5rem, 1.5rem);
         }
         .comp-3d--o .pos:nth-child(5) {
-          transform: scale3d(1, -1, -1) translate3d(2rem, 2rem, 2rem);
+          transform: scale3d(1, -1, -1) translate3d(1.5rem, 1.5rem, 1.5rem);
         }
         .comp-3d--o .pos:nth-child(6) {
-          transform: scale3d(1, -1, 1) translate3d(2rem, 2rem, 2rem);
+          transform: scale3d(1, -1, 1) translate3d(1.5rem, 1.5rem, 1.5rem);
         }
         .comp-3d--o .pos:nth-child(7) {
-          transform: scale3d(1, 1, -1) translate3d(2rem, 2rem, 2rem);
+          transform: scale3d(1, 1, -1) translate3d(1.5rem, 1.5rem, 1.5rem);
         }
         .comp-3d--o .pos:nth-child(8) {
-          transform: scale3d(1, 1, 1) translate3d(2rem, 2rem, 2rem);
+          transform: scale3d(1, 1, 1) translate3d(1.5rem, 1.5rem, 1.5rem);
         }
       `}</style>
     </section>
