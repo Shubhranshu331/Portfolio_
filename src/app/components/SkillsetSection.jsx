@@ -11,7 +11,7 @@ const skillsetList = [
   {
     id: "slide2",
     title: "Machine Learning",
-    items: ["Tensorflow", "Pytorch", "Pandas", "NLTK", "Keras", "NumPy", "Vader", "Scikit-Learn"],
+    items: ["Tensorflow", "Pytorch", "Pandas", "NLTK", "Keras", "NumPy", "Scikit-Learn"],
   },
   {
     id: "slide3",
