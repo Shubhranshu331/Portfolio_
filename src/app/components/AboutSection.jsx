@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const progressList = [
-  { metric: "Concepts", value: "20", postfix: "+" },
-  { metric: "Technical Skills", value: "10", postfix: "+" },
-  { metric: "Projects", value: "10", postfix: "+" },
-  { metric: "Web Development", value: "5", postfix: "+" },
-  { metric: "Machine Learning", value: "5", postfix: "+" },
-  { metric: "Android Development", value: "1", postfix: "+" }
+  { metric: "Concepts", value: 20, postfix: "+" },
+  { metric: "Technical Skills", value: 10, postfix: "+" },
+  { metric: "Projects", value: 10, postfix: "+" },
+  { metric: "Web Development", value: 5, postfix: "+" },
+  { metric: "Machine Learning", value: 5, postfix: "+" },
+  { metric: "Android Development", value: 1, postfix: "+" }
 ];
 
 const AboutSection = () => {
@@ -19,6 +19,7 @@ const AboutSection = () => {
 
   return (
     <motion.section
+      key={Date.now()} // Forces re-render on page load to repeat animation
       id="about"
       className="py-[4vh] sm:py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]"
       initial={{ opacity: 0, scale: 0.8 }}
@@ -33,15 +34,17 @@ const AboutSection = () => {
         }
 
         .counter {
-          animation: counter 4s ease-in-out forwards;
+          animation: counter 2s ease-out forwards;
           counter-reset: num var(--num);
           font-family: 'Raleway', sans-serif;
           font-weight: 700;
           font-size: 1.25rem;
           color: #5e2a3a;
+          display: inline-flex;
+          align-items: center;
         }
 
-        .counter::after {
+        .counter::before {
           content: counter(num);
         }
 
@@ -51,6 +54,13 @@ const AboutSection = () => {
           }
           to {
             --num: var(--target-num);
+          }
+        }
+
+        /* Fallback for browsers that don't support @property */
+        @supports not (animation: counter) {
+          .counter::before {
+            content: attr(data-target-num);
           }
         }
       `}</style>
@@ -189,7 +199,11 @@ const AboutSection = () => {
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
                       <div className="border-[2px] border-[#5e2a3a] rounded-lg w-[3vw] h-[3vw] min-w-[60px] min-h-[60px] flex justify-center items-center">
-                        <h2 className="counter text-[#5e2a3a] text-[1.25rem] font-bold flex items-center" style={{ '--target-num': progress.value }}>
+                        <h2
+                          className="counter"
+                          style={{ '--target-num': progress.value }}
+                          data-target-num={`${progress.value}${progress.postfix}`}
+                        >
                           <span className="inline-block">{progress.postfix}</span>
                         </h2>
                       </div>
@@ -210,7 +224,11 @@ const AboutSection = () => {
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
                       <div className="border-[2px] border-[#5e2a3a] rounded-lg w-[3vw] h-[3vw] min-w-[60px] min-h-[60px] flex justify-center items-center">
-                        <h2 className="counter text-[#5e2a3a] text-[1.25rem] font-bold flex items-center" style={{ '--target-num': progress.value }}>
+                        <h2
+                          className="counter"
+                          style={{ '--target-num': progress.value }}
+                          data-target-num={`${progress.value}${progress.postfix}`}
+                        >
                           <span className="inline-block">{progress.postfix}</span>
                         </h2>
                       </div>
