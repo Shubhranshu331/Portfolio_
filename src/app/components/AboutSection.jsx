@@ -1,10 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import dynamic from 'next/dynamic';
-
-const AnimatedNumbers = dynamic(() => import('react-animated-numbers'), { ssr: false });
 
 const progressList = [
   { metric: "Concepts", value: "20", postfix: "+" },
@@ -16,40 +13,48 @@ const progressList = [
 ];
 
 const AboutSection = () => {
-  const [animationKey, setAnimationKey] = useState(Date.now());
-  const [isMounted, setIsMounted] = useState(false);
-
   useEffect(() => {
-    setIsMounted(true);
-    setAnimationKey(Date.now());
-
-    // Function to handle route changes or page visibility
-    const handleRouteChange = () => {
-      setAnimationKey(Date.now());
-    };
-
-    // Listen for visibility change (e.g., when the user returns to the tab)
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        setAnimationKey(Date.now());
-      }
-    };
-
-    // Add event listener for visibility change
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    // Fallback: Trigger animation after a short delay on mount
-    const timer = setTimeout(() => setAnimationKey(Date.now()), 100);
-
-    // Clean up event listeners and timer
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      clearTimeout(timer);
-    };
-  }, []); // Empty dependency array ensures this runs only on mount
+    console.log("AboutSection mounted");
+  }, []);
 
   return (
-    <section id="about" className="py-[4vh] sm:py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]">
+    <motion.section
+      id="about"
+      className="py-[4vh] sm:py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <style jsx>{`
+        @property --num {
+          syntax: "<integer>";
+          initial-value: 0;
+          inherits: false;
+        }
+
+        .counter {
+          animation: counter 4s ease-in-out forwards;
+          counter-reset: num var(--num);
+          font-family: 'Raleway', sans-serif;
+          font-weight: 700;
+          font-size: 1.25rem;
+          color: #5e2a3a;
+        }
+
+        .counter::after {
+          content: counter(num);
+        }
+
+        @keyframes counter {
+          from {
+            --num: 0;
+          }
+          to {
+            --num: var(--target-num);
+          }
+        }
+      `}</style>
+
       {/* Headings */}
       <div className="relative text-center mb-[2vh]">
         <h1
@@ -72,8 +77,7 @@ const AboutSection = () => {
         <div className="md:col-span-2 mb-[4vh]">
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
             <h3 className="text-3xl font-bold text-[#5e2a3a] mb-[6vh] font-raleway text-center">
@@ -131,8 +135,7 @@ const AboutSection = () => {
             <div className="text-center mt-[3vh] mb-[3vh]">
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: false }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
               >
                 <Link
@@ -169,89 +172,60 @@ const AboutSection = () => {
         <div className="md:col-span-2 mb-[7vh]">
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
             <h3 className="text-3xl font-bold text-[#5e2a3a] mb-[6vh] font-raleway text-center">
               Progress
             </h3>
-            {isMounted && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[2vw]">
-                {/* Column 3 */}
-                <div className="min-w-0">
-                  {progressList.slice(0, 3).map((progress, index) => (
-                    <div key={index} className="flex flex-col mb-[3vh]">
-                      <div className="flex justify-center items-center">
-                        <div className="border-[1px] border-[#5e2a3a] rounded-lg w-[3vw] h-[3vw] min-w-[60px] min-h-[60px] flex justify-center items-center">
-                          <span className="text-[#5e2a3a] text-[1.25rem] font-bold flex items-center">
-                            {isMounted ? (
-                              <AnimatedNumbers
-                                key={`${animationKey}-${progress.metric}-${index}`}
-                                includeComma
-                                animateToNumber={parseInt(progress.value)}
-                                locale="en-US"
-                                className="text-[#5e2a3a] text-[1.25rem] font-bold inline-block"
-                                configs={() => ({
-                                  mass: 1,
-                                  tension: 200,
-                                  friction: 100,
-                                  duration: 500,
-                                })}
-                              />
-                            ) : (
-                              <span className="inline-block">{progress.value}</span>
-                            )}
-                            <span className="inline-block">{progress.postfix}</span>
-                          </span>
-                        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[2vw]">
+              {/* Column 3 */}
+              <div className="min-w-0">
+                {progressList.slice(0, 3).map((progress, index) => (
+                  <div key={index} className="flex flex-col mb-[3vh] items-center justify-center">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <div className="border-[2px] border-[#5e2a3a] rounded-lg w-[3vw] h-[3vw] min-w-[60px] min-h-[60px] flex justify-center items-center">
+                        <h2 className="counter text-[#5e2a3a] text-[1.25rem] font-bold flex items-center" style={{ '--target-num': progress.value }}>
+                          <span className="inline-block">{progress.postfix}</span>
+                        </h2>
                       </div>
-                      <span className="text-[#5e2a3a] text-[1.25rem] font-raleway text-center break-words">
-                        {progress.metric}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                {/* Column 4 */}
-                <div className="min-w-0">
-                  {progressList.slice(3).map((progress, index) => (
-                    <div key={index} className="flex flex-col mb-[3vh]">
-                      <div className="flex justify-center items-center">
-                        <div className="border-[1px] border-[#5e2a3a] rounded-lg w-[3vw] h-[3vw] min-w-[60px] min-h-[60px] flex justify-center items-center ">
-                          <span className="text-[#5e2a3a] text-[1.25rem] font-bold flex items-center">
-                            {isMounted ? (
-                              <AnimatedNumbers
-                                key={`${animationKey}-${progress.metric}-${index}`}
-                                includeComma
-                                animateToNumber={parseInt(progress.value)}
-                                locale="en-US"
-                                className="text-[#5e2a3a] text-[1.25rem] font-bold inline-block"
-                                configs={() => ({
-                                  mass: 1,
-                                  tension: 200,
-                                  friction: 100,
-                                  duration: 500,
-                                })}
-                              />
-                            ) : (
-                              <span className="inline-block">{progress.value}</span>
-                            )}
-                            <span className="inline-block">{progress.postfix}</span>
-                          </span>
-                        </div>
-                      </div>
-                      <span className="text-[#5e2a3a] text-[1.25rem] font-raleway text-center break-words">
-                        {progress.metric}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                    </motion.div>
+                    <span className="text-[#5e2a3a] text-[1.25rem] font-raleway font-bold text-center break-words mt-2">
+                      {progress.metric}
+                    </span>
+                  </div>
+                ))}
               </div>
-            )}
+              {/* Column 4 */}
+              <div className="min-w-0">
+                {progressList.slice(3).map((progress, index) => (
+                  <div key={index} className="flex flex-col mb-[3vh] items-center justify-center">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <div className="border-[2px] border-[#5e2a3a] rounded-lg w-[3vw] h-[3vw] min-w-[60px] min-h-[60px] flex justify-center items-center">
+                        <h2 className="counter text-[#5e2a3a] text-[1.25rem] font-bold flex items-center" style={{ '--target-num': progress.value }}>
+                          <span className="inline-block">{progress.postfix}</span>
+                        </h2>
+                      </div>
+                    </motion.div>
+                    <span className="text-[#5e2a3a] text-[1.25rem] font-raleway font-bold text-center break-words mt-2">
+                      {progress.metric}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
