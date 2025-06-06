@@ -184,7 +184,7 @@ const Navbar = () => {
             animate={{ y: 0 }}
             exit={{ y: '-100%' }}
             transition={{ duration: 0.3 }}
-            className="flex items-center justify-between mx-auto px-3 py-2 bg-[#f6f0e6] bg-opacity-90"
+            className="flex items-center justify-between mx-auto px-3 py-2 bg-[#f6f0e6] bg-opacity-70"
           >
             <Link href="/" className="flex items-center space-x-3">
               {/* Logo (LoadingLogo.mp4 Video) */}

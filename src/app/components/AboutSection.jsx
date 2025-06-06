@@ -1,70 +1,142 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
+// Progress list data
 const progressList = [
   { metric: "Concepts", value: 20, postfix: "+" },
   { metric: "Technical Skills", value: 10, postfix: "+" },
   { metric: "Projects", value: 10, postfix: "+" },
   { metric: "Web Development", value: 5, postfix: "+" },
   { metric: "Machine Learning", value: 5, postfix: "+" },
-  { metric: "Android Development", value: 1, postfix: "+" }
+  { metric: "Android Development", value: 1, postfix: "+" },
 ];
 
+// Counter component for animating numbers
+const Counter = ({ end, duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const increment = end / (duration / 16); // Approx 60fps (16ms per frame)
+    let startTime = null;
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const nextCount = Math.min(Math.floor(increment * (progress / 16)), end);
+
+      setCount(nextCount);
+
+      if (nextCount < end) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      requestAnimationFrame(animate);
+    }, 100); // Slight delay to ensure component is mounted
+
+    return () => {
+      clearTimeout(timer);
+      setCount(0); // Reset count when unmounting
+    };
+  }, [end, duration]);
+
+  return <span>{count}</span>;
+};
+
 const AboutSection = () => {
+  const router = useRouter();
+  const [animationKey, setAnimationKey] = useState(Date.now());
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const sectionRef = useRef(null);
+
+  // Check visibility on mount and trigger animation if in view
+  useEffect(() => {
+    const checkVisibility = () => {
+      if (sectionRef.current && !hasAnimated) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const isInViewport =
+          rect.top >= 0 &&
+          rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.5;
+        if (isInViewport) {
+          setAnimationKey(Date.now());
+          setHasAnimated(true);
+        }
+      }
+    };
+
+    const timer = setTimeout(checkVisibility, 300); // Delay to ensure DOM is ready
+
+    return () => clearTimeout(timer);
+  }, [hasAnimated]);
+
+  // Intersection Observer to trigger animation on scroll (once)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setAnimationKey(Date.now());
+            setHasAnimated(true);
+          }
+        });
+      },
+      {
+        threshold: 0.5, // Trigger when 50% of the section is visible
+        rootMargin: '0px',
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
+  // Handle hash changes (e.g., clicking #about link)
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#about' && !hasAnimated) {
+        setAnimationKey(Date.now());
+        setHasAnimated(true);
+        sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    // Check initial hash on mount
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, [hasAnimated]);
+
   useEffect(() => {
     console.log("AboutSection mounted");
   }, []);
 
   return (
     <motion.section
-      key={Date.now()} // Forces re-render on page load to repeat animation
+      ref={sectionRef}
+      key={animationKey}
       id="about"
       className="py-[4vh] sm:py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <style jsx>{`
-        @property --num {
-          syntax: "<integer>";
-          initial-value: 0;
-          inherits: false;
-        }
-
-        .counter {
-          animation: counter 2s ease-out forwards;
-          counter-reset: num var(--num);
-          font-family: 'Raleway', sans-serif;
-          font-weight: 700;
-          font-size: 1.25rem;
-          color: #5e2a3a;
-          display: inline-flex;
-          align-items: center;
-        }
-
-        .counter::before {
-          content: counter(num);
-        }
-
-        @keyframes counter {
-          from {
-            --num: 0;
-          }
-          to {
-            --num: var(--target-num);
-          }
-        }
-
-        /* Fallback for browsers that don't support @property */
-        @supports not (animation: counter) {
-          .counter::before {
-            content: attr(data-target-num);
-          }
-        }
-      `}</style>
-
       {/* Headings */}
       <div className="relative text-center mb-[2vh]">
         <h1
@@ -151,7 +223,7 @@ const AboutSection = () => {
                 <Link
                   href="/Shubhranshu_Resume.pdf"
                   download
-                  className="call-to-action px-[1rem] sm:px-[1.5rem] py-[0.5rem] sm:py-[0.75rem] inline-block w-full sm:w-fit rounded-full bg-[#f6f0e6] text-white relative hover:bg-[#9c8f75] transition-colors duration-300 border-[1px] border-[#5e2a3a]"
+                  className="call-to-action px-[1rem] sm:px-[1.5rem] py-[0.75rem] inline-block w-full sm:w-fit rounded-full bg-[#f6f0e6] text-white relative hover:bg-[#9c8f75] transition-colors duration-300 border-[1px] border-[#5e2a3a]"
                 >
                   <span className="flex items-center justify-between text-[#222222] text-[0.875rem] sm:text-[1rem]">
                     Download Resume
@@ -192,20 +264,19 @@ const AboutSection = () => {
               {/* Column 3 */}
               <div className="min-w-0">
                 {progressList.slice(0, 3).map((progress, index) => (
-                  <div key={index} className="flex flex-col mb-[3vh] items-center justify-center">
+                  <div key={`${animationKey}-${index}`} className="flex flex-col mb-[3vh] items-center justify-center">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
                       <div className="border-[2px] border-[#5e2a3a] rounded-lg w-[3vw] h-[3vw] min-w-[60px] min-h-[60px] flex justify-center items-center">
-                        <h2
-                          className="counter"
-                          style={{ '--target-num': progress.value }}
-                          data-target-num={`${progress.value}${progress.postfix}`}
-                        >
-                          <span className="inline-block">{progress.postfix}</span>
-                        </h2>
+                        <div className="flex items-center">
+                          <span className="text-[#5e2a3a] text-[1.25rem] font-raleway font-bold">
+                            <Counter end={progress.value} duration={2000} />
+                            {progress.postfix}
+                          </span>
+                        </div>
                       </div>
                     </motion.div>
                     <span className="text-[#5e2a3a] text-[1.25rem] font-raleway font-bold text-center break-words mt-2">
@@ -217,20 +288,19 @@ const AboutSection = () => {
               {/* Column 4 */}
               <div className="min-w-0">
                 {progressList.slice(3).map((progress, index) => (
-                  <div key={index} className="flex flex-col mb-[3vh] items-center justify-center">
+                  <div key={`${animationKey}-${index + 3}`} className="flex flex-col mb-[3vh] items-center justify-center">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
                       <div className="border-[2px] border-[#5e2a3a] rounded-lg w-[3vw] h-[3vw] min-w-[60px] min-h-[60px] flex justify-center items-center">
-                        <h2
-                          className="counter"
-                          style={{ '--target-num': progress.value }}
-                          data-target-num={`${progress.value}${progress.postfix}`}
-                        >
-                          <span className="inline-block">{progress.postfix}</span>
-                        </h2>
+                        <div className="flex items-center">
+                          <span className="text-[#5e2a3a] text-[1.25rem] font-raleway font-bold">
+                            <Counter end={progress.value} duration={2000} />
+                            {progress.postfix}
+                          </span>
+                        </div>
                       </div>
                     </motion.div>
                     <span className="text-[#5e2a3a] text-[1.25rem] font-raleway font-bold text-center break-words mt-2">
