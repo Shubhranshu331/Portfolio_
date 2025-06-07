@@ -3,9 +3,10 @@ import LoadingLogo from "./components/LoadingLogo";
 import First from "./components/First";
 import Navbar from "./components/Navbar";
 import AboutSection from "./components/AboutSection";
-import ProjectSection from "./components/ProjectSection";
-import EmailSection from "./components/EmailSection";
 import SkillsetSection from "./components/SkillsetSection";
+import InternshipsSection from "./components/InternshipsSection";
+
+import EmailSection from "./components/EmailSection";
 // import AchievementsSection from "./components/AchievementsSection";
 import Footer from "./components/Footer";
 
@@ -18,7 +19,8 @@ export default function Home() {
           <First />
           <AboutSection />
           <SkillsetSection/>
-          <ProjectSection />
+          <InternshipsSection/>
+          
           {/* <AchievementsSection /> */}
           <EmailSection />
       </div>

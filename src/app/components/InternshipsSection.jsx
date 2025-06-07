@@ -8,57 +8,57 @@ import { EyeIcon } from '@heroicons/react/24/solid'; // Importing EyeIcon from H
 const internships = [
   {
     id: 1,
-    title: 'Biostatistics Internship',
+    title: 'Biostatistics (Teachnook)',
     image: '/images/internships/Internship1.png',
     pdf: '/internships/Internship1.pdf',
     details: {
       'Programming Language': ['Python', 'R'],
-      'Major Concepts': ['Statistical Analysis', 'Data Visualization', 'Hypothesis Testing'],
-      'Description': 'Conducted statistical analysis on clinical trial data using Python and R, focusing on hypothesis testing and data visualization to support research outcomes.',
+      'Concepts': ['statistical inference', 'hypothesis testing', 'epidemiological studies', 'data visualization'],
+      'Description': 'Biostatistics program centered on applying Machine Learning to complex biological and health data. It leveraged predictive modeling for insightful analysis and data-driven decision-making in life sciences.',
     },
   },
   {
     id: 2,
-    title: 'Web Development Internship',
+    title: 'AI/ML for Geodata Analysis (ISRO/IIRS)',
     image: '/images/internships/Internship2.png',
     pdf: '/internships/Internship2.pdf',
     details: {
-      'Programming Language': ['JavaScript', 'HTML', 'CSS'],
-      'Major Concepts': ['ReactJS', 'NextJS', 'Responsive Design'],
-      'Description': 'Developed responsive web applications using ReactJS and NextJS, implementing modern UI designs with Tailwind CSS for enhanced user experience.',
+      'Programming Language': ['Python'],
+      'Concepts': ['Geodata analysis', 'satellite imagery processing', 'spatial statistics', 'predictive modeling'],
+      'Description': 'Focused on using Artificial Intelligence and Machine Learning for analyzing geographical data. This involved applying advanced techniques for processing and interpreting geospatial information.',
     },
   },
   {
     id: 3,
-    title: 'Machine Learning Internship',
+    title: 'Machine Learning (MNNIT)',
     image: '/images/internships/Internship3.png',
     pdf: '/internships/Internship3.pdf',
     details: {
-      'Programming Language': ['Python', 'TensorFlow'],
-      'Major Concepts': ['Deep Learning', 'Neural Networks', 'Data Preprocessing'],
-      'Description': 'Built and trained deep learning models with TensorFlow, focusing on neural network architectures and data preprocessing for predictive analytics.',
+      'Programming Language': ['Python', ],
+      'Concepts': ['Deep Learning', 'CNNs', 'UNet'  ,  'semantic segmentation'],
+      'Description': 'The internship applied deep learning, specifically UNet architecture, for image segmentation and polyp detection within medical colonoscopy images. It focused on advanced image processing techniques to aid in diagnostics.',
     },
   },
   {
     id: 4,
-    title: 'Data Science Internship',
+    title: 'Cloud Infrastructure (Oracle)',
     image: '/images/internships/Internship4.png',
     pdf: '/internships/Internship4.pdf',
     details: {
-      'Programming Language': ['Python', 'R', 'SQL'],
-      'Major Concepts': ['Data Analysis', 'Predictive Modeling', 'Big Data'],
-      'Description': 'Analyzed large datasets using Python, R, and SQL to develop predictive models, contributing to data-driven decision-making processes.',
+      
+      'Concepts': ['Cloud computing', 'IaaS', 'PaaS', 'networking in cloud',  'storage services', 'cloud security', 'virtual machines'],
+      'Description': 'Achieved certification in Oracle Cloud Infrastructure (OCI), covering foundational concepts of cloud computing services. This demonstrates a core understanding of cloud architecture, compute, and storage.',
     },
   },
   {
     id: 5,
-    title: 'Frontend Development Internship',
+    title: 'Full-stack Development, MERN (IBM)',
     image: '/images/internships/Internship5.png',
     pdf: '/internships/Internship5.pdf',
     details: {
-      'Programming Language': ['JavaScript', 'TypeScript'],
-      'Major Concepts': ['ReactJS', 'UI/UX Design', 'Responsive Design'],
-      'Description': 'Designed and implemented user interfaces with ReactJS and TypeScript, emphasizing UI/UX principles and responsive design for cross-device compatibility.',
+      'Programming Language': ['HTML','CSS','JavaScript','Node.Js'],
+      'Concepts': ['Responsive-Design','Animation','API interactions', 'data manipulation'],
+      'Description': 'Completed a course focused on extending IBM DOORS Next functionality using JavaScript. This involved learning practical scripting for customizing and enhancing requirements management tools.',
     },
   },
 ];
@@ -99,15 +99,12 @@ const InternshipsSection = () => {
             key={internship.id}
             style={{
               '--i': index,
-              height: '600px', // Static height to fit content
             }}
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: index * 0.2 }}
             className="shadow-lg"
           >
-            <h2 className="text-[#5e2a3a] mb-2">{internship.title}</h2>
-            <p className="mb-2 text-gray-700">{internship.details.Description}</p>
             <div className="relative group">
               <Image
                 src={internship.image}
@@ -119,13 +116,13 @@ const InternshipsSection = () => {
               />
               <button
                 onClick={() => handleImageClick(internship.pdf)}
-                className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white p-2 rounded-full shadow-md z-10"
+                className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 p-2 rounded-full shadow-md z-20"
                 aria-label="View certificate PDF"
               >
                 <EyeIcon className="w-6 h-6 text-gray-800" />
               </button>
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-30 p-4 z-0">
-                <ul className="text-white space-y-2">
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-30 p-4 z-10">
+                <ul className="text-white space-y-2 text-base">
                   {Object.entries(internship.details)
                     .filter(([key]) => key !== 'Description')
                     .map(([key, value]) => (
@@ -139,6 +136,8 @@ const InternshipsSection = () => {
                 </ul>
               </div>
             </div>
+            <h2 className="text-[#5e2a3a] font-bold">{internship.title}</h2>
+            <p className=" text-[#222222] text-1.5rem">{internship.details.Description}</p>
           </motion.article>
         ))}
       </div>
