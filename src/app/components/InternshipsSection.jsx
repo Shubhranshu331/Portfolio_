@@ -1,10 +1,12 @@
 'use client';
 
+// Import required dependencies
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { EyeIcon } from '@heroicons/react/24/solid'; // Importing EyeIcon from Heroicons
 
+// Define internship data array with 5 internships, each with image, PDF, and details
 const internships = [
   {
     id: 1,
@@ -34,8 +36,8 @@ const internships = [
     image: '/images/internships/Internship3.png',
     pdf: '/internships/Internship3.pdf',
     details: {
-      'Programming Language': ['Python', ],
-      'Concepts': ['Deep Learning', 'CNNs', 'UNet'  ,  'semantic segmentation'],
+      'Programming Language': ['Python'],
+      'Concepts': ['Deep Learning', 'CNNs', 'UNet', 'semantic segmentation'],
       'Description': 'The internship applied deep learning, specifically UNet architecture, for image segmentation and polyp detection within medical colonoscopy images. It focused on advanced image processing techniques to aid in diagnostics.',
     },
   },
@@ -45,8 +47,7 @@ const internships = [
     image: '/images/internships/Internship4.png',
     pdf: '/internships/Internship4.pdf',
     details: {
-      
-      'Concepts': ['Cloud computing', 'IaaS', 'PaaS', 'networking in cloud',  'storage services', 'cloud security', 'virtual machines'],
+      'Concepts': ['Cloud computing', 'IaaS', 'PaaS', 'networking in cloud', 'storage services', 'cloud security', 'virtual machines'],
       'Description': 'Achieved certification in Oracle Cloud Infrastructure (OCI), covering foundational concepts of cloud computing services. This demonstrates a core understanding of cloud architecture, compute, and storage.',
     },
   },
@@ -56,28 +57,44 @@ const internships = [
     image: '/images/internships/Internship5.png',
     pdf: '/internships/Internship5.pdf',
     details: {
-      'Programming Language': ['HTML','CSS','JavaScript','Node.Js'],
-      'Concepts': ['Responsive-Design','Animation','API interactions', 'data manipulation'],
+      'Programming Language': ['HTML', 'CSS', 'JavaScript', 'Node.Js'],
+      'Concepts': ['Responsive-Design', 'Animation', 'API interactions', 'data manipulation'],
       'Description': 'Completed a course focused on extending IBM DOORS Next functionality using JavaScript. This involved learning practical scripting for customizing and enhancing requirements management tools.',
     },
   },
 ];
 
+// Main section component for rendering all internships
 const InternshipsSection = () => {
+  // State to track the zoomed PDF in the modal
   const [zoomedImage, setZoomedImage] = useState(null);
 
+  // Handle image click to open PDF in modal
   const handleImageClick = (pdf) => {
     setZoomedImage(pdf);
   };
 
+  // Close the PDF modal
   const handleCloseZoom = () => {
     setZoomedImage(null);
   };
 
+  // Animation variants for fade-in effect
+  const variants = {
+    hidden: { opacity: 0, y: 20 }, // Initial state: invisible and slightly below
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } } // Final state: fully visible
+  };
+
   return (
-    <section id="internships" className="py-[4vh] sm:py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]">
-      {/* Heading */}
-      <div className="relative text-center mb-[4vh]">
+    <section id="internships" className="py-[4vh] sm:py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]"> {/* Responsive padding for section */}
+      {/* Heading with fade-in animation */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }} // Trigger when 20% of heading is in viewport, only once
+        variants={variants}
+        className="relative text-center mb-[4vh]"
+      >
         <h1
           className="text-[2.5rem] sm:text-[3.5rem] lg:text-[4.375rem] font-bold text-[#e0b0bc] opacity-50"
           style={{ fontFamily: 'Faktor, Raleway, sans-serif' }}
@@ -90,19 +107,22 @@ const InternshipsSection = () => {
         >
           My Internships
         </h2>
-      </div>
+      </motion.div>
 
-      {/* Carousel */}
-      <div className="carousel" mask>
+      {/* Carousel with fade-in animation */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }} // Trigger when 20% of carousel is in viewport, only once
+        variants={variants}
+        className="carousel" mask
+      >
         {internships.map((internship, index) => (
-          <motion.article
+          <article
             key={internship.id}
             style={{
               '--i': index,
             }}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
             className="shadow-lg"
           >
             <div className="relative group">
@@ -137,10 +157,10 @@ const InternshipsSection = () => {
               </div>
             </div>
             <h2 className="text-[#5e2a3a] font-bold">{internship.title}</h2>
-            <p className=" text-[#222222] text-1.5rem">{internship.details.Description}</p>
-          </motion.article>
+            <p className="text-[#222222] text-1.5rem">{internship.details.Description}</p>
+          </article>
         ))}
-      </div>
+      </motion.div>
 
       {/* Zoomed PDF Modal */}
       {zoomedImage && (
