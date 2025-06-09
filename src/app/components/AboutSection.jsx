@@ -75,32 +75,53 @@ const AboutSection = () => {
   }, [hasAnimated]);
 
   // Intersection Observer to trigger animation on scroll (once)
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting && !hasAnimated) {
+  //           setAnimationKey(Date.now());
+  //           setHasAnimated(true);
+  //         }
+  //       });
+  //     },
+  //     {
+  //       threshold: 0.5, // Trigger when 50% of the section is visible
+  //       rootMargin: '0px',
+  //     }
+  //   );
+
+  //   if (sectionRef.current) {
+  //     observer.observe(sectionRef.current);
+  //   }
+
+  //   return () => {
+  //     if (sectionRef.current) {
+  //       observer.unobserve(sectionRef.current);
+  //     }
+  //   };
+  // }, [hasAnimated]);
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setAnimationKey(Date.now());
-            setHasAnimated(true);
-          }
-        });
-      },
-      {
-        threshold: 0.5, // Trigger when 50% of the section is visible
-        rootMargin: '0px',
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+  const currentRef = sectionRef.current; // Store ref value
+  const handleHashChange = () => {
+    if (window.location.hash === '#about' && !hasAnimated) {
+      setAnimationKey(Date.now());
+      setHasAnimated(true);
+      currentRef?.scrollIntoView({ behavior: 'smooth' });
     }
+  };
 
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [hasAnimated]);
+  // Check initial hash on mount
+  handleHashChange();
+
+  // Listen for hash changes
+  window.addEventListener('hashchange', handleHashChange);
+
+  return () => {
+    window.removeEventListener('hashchange', handleHashChange);
+  };
+}, [hasAnimated]);
 
   // Handle hash changes (e.g., clicking #about link)
   useEffect(() => {
