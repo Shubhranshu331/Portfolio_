@@ -24,7 +24,7 @@ export default function LoadingLogo({ children }) {
             playsInline
             className="w-1/4 max-w-[200px] object-contain"
           />
-          <div><h1>This portfolio is being upgraded<br/> the responsiveness will be imporoved thus far<br/> first five web pages are done<br/> the project section images and videos will be updated soon      </h1></div>
+          
         </div>
       ) : (
         children

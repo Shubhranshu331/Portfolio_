@@ -8,14 +8,14 @@ import Link from "next/link";
 
 const First = () => {
   return (
-    <section className="py-[2vh] sm:py-[4vh]">
+    <section className="py-[4vh] sm:py-[0vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Image Section (Left/Top) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="col-span-1 lg:col-span-4 place-self-center mt-[2vh] lg:mt-0"
+          className="col-span-1 lg:col-span-4 place-self-center mt-[2vh] lg:mt-0 "
         >
           <div className="rounded-full w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] relative border-[0.016em] lg:border-[0.01em] border-[#5e2a3a]">
             <Image

@@ -17,15 +17,15 @@ export default function Home() {
     <main className="flex min-h-screen flex-col bg-[#f6f0e6] text-[#222222] font-lato">
       <Navbar />
       <div className="container mt-24 mx-auto py-4 px-12">
-        <LoadingLogo/>
-          <First />
-          <AboutSection />
-          <SkillsetSection/>
-          <InternshipsSection/>
-          <ProjectSection/>
-          <EducationSection/>
-          {/* <AchievementsSection /> */}
-          <EmailSection />
+        <LoadingLogo />
+        <First />
+        <AboutSection />
+        <SkillsetSection />
+        <InternshipsSection />
+        <ProjectSection />
+        <EducationSection />
+        {/* <AchievementsSection /> */}
+        <EmailSection />
       </div>
       <Footer />
     </main>

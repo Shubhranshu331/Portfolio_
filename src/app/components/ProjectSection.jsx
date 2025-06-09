@@ -11,11 +11,10 @@ const projects = [
   {
     id: 1,
     title: 'Graph Neural Networks for Survival Prediction',
-    video: '/video/vid1.mp4', // Placeholder video path
+    video: '/video/project/project1.mp4', // Placeholder video path
     images: [
-      '/images/projects/space.png',
-      '/images/projects/space.png',
-      '/images/projects/space.png'
+      '/images/projects/project1a.png',
+      '/images/projects/project1b.png'
     ],
     github: 'https://github.com/Shubhranshu331/Graph-Neural-Networks-for-Survival-Prediction',
     languages: ['Python (Juypter Notebook)'],
@@ -26,11 +25,10 @@ const projects = [
   {
     id: 2,
     title: 'Personal Portfolio using Next.JS, TailwindCSS and Node.JS',
-    video: '/video/vid1.mp4',
+    video: '/video/project/project2.mp4',
     images: [
-      '/images/projects/space.png',
-      '/images/projects/space.png',
-      '/images/projects/space.png'
+      '/images/projects/project2a.png',
+      '/images/projects/project2b.png'
     ],
     github: 'https://github.com/Shubhranshu331/Portfolio_',
     languages: ['JavaScript (Next.JS)', 'CSS (TailwindCSS)', 'HTML'],
@@ -41,11 +39,10 @@ const projects = [
   {
     id: 3,
     title: 'Detection of Polp in Colonoscopy Images using U_Net Architecture',
-    video: '/video/vid1.mp4',
+    video: '/video/project/project3.mp4',
     images: [
-      '/images/projects/space.png',
-      '/images/projects/space.png',
-      '/images/projects/space.png'
+      '/images/projects/project3a.png',
+      '/images/projects/project3b.png'
     ],
     github: 'https://github.com/Shubhranshu331/Polyp--Image_segmentation-UNET-',
     languages: ['Python (Jupyter Notebook)'],
@@ -56,11 +53,10 @@ const projects = [
   {
     id: 4,
     title: 'Handwritten Digit Recognition using Sequential Keras',
-    video: '/video/vid1.mp4',
+    video: '/video/project/project4.mp4',
     images: [
-      '/images/projects/space.png',
-      '/images/projects/space.png',
-      '/images/projects/space.png'
+      '/images/projects/project4a.png',
+      '/images/projects/project4b.png'
     ],
     github: 'https://github.com/Shubhranshu331/Handwritten-Digit-Recognition',
     languages: ['Python (Jupyter Notebook)'],
@@ -71,11 +67,10 @@ const projects = [
   {
     id: 5,
     title: 'Amazon Food Review - Sentiment Analysis',
-    video: '/video/vid1.mp4',
+    video: '/video/project/project5.mp4',
     images: [
-      '/images/projects/space.png',
-      '/images/projects/space.png',
-      '/images/projects/space.png'
+      '/images/projects/project5a.png',
+      '/images/projects/project5b.png'
     ],
     github: 'https://github.com/Shubhranshu331/Sentiment-Analysis',
     languages: ['Python (Jupyter Notebook)'],
@@ -86,11 +81,10 @@ const projects = [
   {
     id: 6,
     title: 'Tic-Tac-Toe app using Android Studio',
-    video: '/video/vid1.mp4',
+    video: '/video/project/project6.mp4',
     images: [
-      '/images/projects/space.png',
-      '/images/projects/space.png',
-      '/images/projects/space.png'
+      '/images/projects/project6a.png',
+      '/images/projects/project6b.png'
     ],
     github: 'https://github.com/Shubhranshu331/TicTacToeApp-java-',
     languages: ['Java', 'XML'],
@@ -101,11 +95,10 @@ const projects = [
   {
     id: 7,
     title: 'Parallax using React.JS and SCSS',
-    video: '/video/vid1.mp4',
+    video: '/video/project/project7.mp4',
     images: [
-      '/images/projects/space.png',
-      '/images/projects/space.png',
-      '/images/projects/space.png'
+      '/images/projects/project7a.png',
+      '/images/projects/project7b.png'
     ],
     github: 'https://github.com/Shubhranshu331/Parallax-React.JS-and-scss',
     languages: ['JavaScript (React.JS)', 'HTML', 'SCSS'],
@@ -116,11 +109,10 @@ const projects = [
   {
     id: 8,
     title: 'Netflix Clone using HTML, CSS and JS',
-    video: '/video/vid1.mp4',
+    video: '/video/project/project8.mp4',
     images: [
-      '/images/projects/space.png',
-      '/images/projects/space.png',
-      '/images/projects/space.png'
+      '/images/projects/project8a.png',
+      '/images/projects/project8b.png'
     ],
     github: 'https://github.com/Shubhranshu331/Netflix-Clone',
     languages: ['HTML', 'CSS', 'JavaScript'],
@@ -131,11 +123,10 @@ const projects = [
   {
     id: 9,
     title: 'AssignmentO using HTML and CSS',
-    video: '/video/vid1.mp4',
+    video: '/video/project/project9.mp4',
     images: [
-      '/images/projects/space.png',
-      '/images/projects/space.png',
-      '/images/projects/space.png'
+      '/images/projects/project9a.png',
+      '/images/projects/project9b.png'
     ],
     github: 'https://github.com/Shubhranshu331/Assignment0',
     languages: ['HTML', 'CSS'],

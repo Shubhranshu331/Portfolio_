@@ -1,6 +1,7 @@
 // import localFont from "next/font/local";
 import "./globals.css";
 
+
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
 //   variable: "--font-geist-sans",
@@ -23,8 +24,9 @@ export default function RootLayout({ children }) {
       <head>
          <link
           href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Lato:wght@400;700&display=swap"
-          rel="stylesheet"
+          rel="stylesheet" 
         />
+        <link rel="icon" href="/images/titlelogo.png" />
       </head>
       <body>
         {children}
