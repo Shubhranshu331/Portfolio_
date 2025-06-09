@@ -6,6 +6,7 @@ import AboutSection from "./components/AboutSection";
 import SkillsetSection from "./components/SkillsetSection";
 import InternshipsSection from "./components/InternshipsSection";
 import ProjectSection from "./components/ProjectSection";
+import EducationSection from "./components/EducationSection";
 
 import EmailSection from "./components/EmailSection";
 // import AchievementsSection from "./components/AchievementsSection";
@@ -22,6 +23,7 @@ export default function Home() {
           <SkillsetSection/>
           <InternshipsSection/>
           <ProjectSection/>
+          <EducationSection/>
           {/* <AchievementsSection /> */}
           <EmailSection />
       </div>

@@ -138,7 +138,7 @@ const AboutSection = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
       {/* Headings */}
-      <div className="relative text-center mb-[2vh]">
+      <div className="relative text-center mb-[4vh]">
         <h1
           className="text-[4.375rem] font-bold text-[#e0b0bc] opacity-50"
           style={{ fontFamily: 'Faktor, Raleway, sans-serif' }}

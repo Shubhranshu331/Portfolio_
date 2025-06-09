@@ -102,7 +102,7 @@ const InternshipsSection = () => {
           INTERNSHIPS
         </h1>
         <h2
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl sm:text-4xl lg:text-5xl font-bold text-[#5e2a3a]"
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-[#5e2a3a]"
           style={{ fontFamily: 'Raleway, sans-serif' }}
         >
           My Internships
@@ -115,7 +115,7 @@ const InternshipsSection = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }} // Trigger when 20% of carousel is in viewport, only once
         variants={variants}
-        className="carousel" mask
+        className="carousel mt-4" mask
       >
         {internships.map((internship, index) => (
           <article

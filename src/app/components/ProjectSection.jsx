@@ -468,7 +468,7 @@ const ProjectSection = () => {
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
         }}
-        className="relative text-center mb-[2vh] sm:mb-[4vh]"
+        className="relative text-center mb-[4vh]"
       >
         <h1
           className="text-[2.5rem] sm:text-[3.5rem] lg:text-[4.375rem] font-bold text-[#e0b0bc] opacity-50"
@@ -477,7 +477,7 @@ const ProjectSection = () => {
           PROJECTS
         </h1>
         <h2
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl sm:text-4xl lg:text-5xl font-bold text-[#5e2a3a]"
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-[#5e2a3a]"
           style={{ fontFamily: 'Raleway, sans-serif' }}
         >
           My Projects
