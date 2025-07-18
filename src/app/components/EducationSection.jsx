@@ -34,7 +34,7 @@ const education = [
     details: [
       { label: 'College Name:', value: 'United College of Engineering and Research, Prayagraj' },
       { label: 'Branch:', value: 'CSE' },
-      { label: 'CGPA:', value: '6.58 (current)' }
+      { label: 'CGPA:', value: '6.77' }
     ]
   }
 ];
