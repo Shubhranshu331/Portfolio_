@@ -145,7 +145,7 @@ const First = () => {
               {/* Type Animation */}
               <TypeAnimation
                 sequence={[
-                  'UI/UX Designer',
+                  'Data Analyst',
                   1000,
                   'ML Engineer',
                   1000,
