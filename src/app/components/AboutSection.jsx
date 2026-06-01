@@ -6,10 +6,10 @@ import { motion } from 'framer-motion';
 const progressList = [
   { metric: "Concepts", value: 20, postfix: "+" },
   { metric: "Technical Skills", value: 10, postfix: "+" },
-  { metric: "Projects", value: 10, postfix: "+" },
+  { metric: "Projects", value: 13, postfix: "+" },
   { metric: "Web Development", value: 5, postfix: "+" },
   { metric: "Machine Learning", value: 5, postfix: "+" },
-  { metric: "Android Development", value: 1, postfix: "+" },
+  { metric: "Data Analytics", value: 5, postfix: "+" },
 ];
 
 const Counter = ({ end, duration = 2000, trigger }) => {
