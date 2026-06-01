@@ -1,17 +1,14 @@
 'use client';
+import React, { useState } from 'react'; 
+import Image from 'next/image'; 
+import { motion } from 'framer-motion';
+import { EyeIcon, CodeBracketIcon } from '@heroicons/react/24/solid'; 
 
-// Import required dependencies for building the component
-import React, { useState } from 'react'; // React for component logic, useState for state management
-import Image from 'next/image'; // Next.js Image component for optimized image rendering
-import { motion } from 'framer-motion'; // Framer Motion for animations
-import { EyeIcon, CodeBracketIcon } from '@heroicons/react/24/solid'; // Icons for viewing media and linking to GitHub
-
-// Define the projects array containing 10 sample projects with their details
 const projects = [
   {
     id: 1,
     title: 'Graph Neural Networks for Survival Prediction',
-    video: '/video/project/project1.mp4', // Placeholder video path
+    video: '/video/project/project1.mp4', 
     images: [
       '/images/projects/project1a.png',
       '/images/projects/project1b.png'
@@ -136,35 +133,34 @@ const projects = [
   },
 ];
 
-// Component to render individual project screens (video, languages, concepts, description)
+
 const ProjectScreen = ({ screen, isActive, type, github }) => {
-  // State to manage the zoomed media modal (for enlarged image/video)
+  
   const [zoomedMedia, setZoomedMedia] = useState(null);
 
-  // Handle Eye icon click to open modal with enlarged media
+  
   const handleMediaClick = () => {
     setZoomedMedia(type === 'video' ? screen.video : screen.image);
   };
 
-  // Handle Code icon click to open GitHub repository in a new tab
+  
   const handleGithubClick = () => {
     window.open(github, '_blank');
   };
 
-  // Close the zoomed media modal
+
   const handleCloseZoom = () => {
     setZoomedMedia(null);
   };
 
   return (
     <>
-      {/* List item for each screen, slides in/out based on active state */}
       <li
         className={`absolute w-full h-full flex flex-col transition-all duration-400 ease-[cubic-bezier(0.25,0.8,0.25,1)] 
           ${isActive ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-[-72px]'}`}
         style={{ transitionDelay: isActive ? '0.4s' : '0s', zIndex: isActive ? 10 : 0 }}
       >
-        {/* Video or image display for video, languages, and concepts screens */}
+
         {(type === 'video' || type === 'languages' || type === 'concepts') && (
           <div className="flex justify-center mt-2 sm:mt-4">
             <div
@@ -215,7 +211,7 @@ const ProjectScreen = ({ screen, isActive, type, github }) => {
           </div>
         )}
 
-        {/* Title below video/image */}
+       
         <div className="flex flex-col mb-2 sm:mb-4 mt-2 sm:mt-4">
           <h3
             className="text-base leading-[1.4em] uppercase tracking-[0.15em] text-center text-[#5e2a3a] font-raleway font-bold"
@@ -223,7 +219,6 @@ const ProjectScreen = ({ screen, isActive, type, github }) => {
           />
         </div>
 
-        {/* Content (brief, languages, concepts, or description) */}
         {type === 'video' && screen.content && (
           <p className="text-[12px] sm:text-[13px] leading-[1.6em] text-[#222222]/80 px-4 text-center text-justify mb-2 sm:mb-4">
             {screen.content}
@@ -248,7 +243,7 @@ const ProjectScreen = ({ screen, isActive, type, github }) => {
         )}
       </li>
 
-      {/* Modal for zoomed image/video */}
+     
       {zoomedMedia && (
         <motion.div
           className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
@@ -288,18 +283,18 @@ const ProjectScreen = ({ screen, isActive, type, github }) => {
   );
 };
 
-// Component for rendering a single project walkthrough with navigation
+
 const ProjectWalkthrough = ({ project }) => {
-  // State to track current screen (0: video, 1: languages, 2: concepts, 3: description)
+
   const [currentScreen, setCurrentScreen] = useState(0);
 
-  // Define the four screens for each project
+
   const screens = [
     {
       type: 'video',
       video: project.video,
       title: project.title,
-      content: project.brief // Full brief without truncation
+      content: project.brief 
     },
     {
       type: 'languages',
@@ -320,21 +315,21 @@ const ProjectWalkthrough = ({ project }) => {
     }
   ];
 
-  // Navigate to next screen
+
   const nextScreen = () => {
     if (currentScreen < screens.length - 1) {
       setCurrentScreen(currentScreen + 1);
     }
   };
 
-  // Navigate to previous screen
+ 
   const prevScreen = () => {
     if (currentScreen > 0) {
-      setCurrentScreen(currentScreen - 1); // Fixed: Correctly decrement currentScreen
+      setCurrentScreen(currentScreen - 1); 
     }
   };
 
-  // Animation variants for project card
+
   const variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
@@ -348,7 +343,7 @@ const ProjectWalkthrough = ({ project }) => {
       variants={variants}
       className="w-[280px] sm:w-[300px] h-[400px] sm:h-[440px] bg-white flex flex-col shadow-lg rounded-[10px]"
     >
-      {/* Navigation dots */}
+   
       <div className="flex justify-center mt-2 sm:mt-4">
         {screens.map((_, index) => (
           <span
@@ -360,7 +355,7 @@ const ProjectWalkthrough = ({ project }) => {
         ))}
       </div>
 
-      {/* Container for project screens */}
+ 
       <div className="flex-1 flex items-start text-center relative">
         <ul className="flex-1 relative w-full h-full">
           {screens.map((screen, index) => (
@@ -375,9 +370,9 @@ const ProjectWalkthrough = ({ project }) => {
         </ul>
       </div>
 
-      {/* Navigation buttons */}
+
       <div className="flex justify-between items-center px-4 pb-2 sm:pb-4">
-        {/* Back button */}
+
         <button
           onClick={prevScreen}
           disabled={currentScreen === 0}
@@ -405,7 +400,7 @@ const ProjectWalkthrough = ({ project }) => {
           </span>
         </button>
 
-        {/* Next button */}
+
         <button
           onClick={nextScreen}
           disabled={currentScreen === screens.length - 1}
@@ -433,7 +428,7 @@ const ProjectWalkthrough = ({ project }) => {
           </span>
         </button>
 
-        {/* Reset button */}
+  
         <button
           onClick={() => setCurrentScreen(0)}
           disabled={currentScreen !== screens.length - 1}
@@ -447,7 +442,7 @@ const ProjectWalkthrough = ({ project }) => {
   );
 };
 
-// Main section component to render all project cards
+
 const ProjectSection = () => {
   return (
     <section id="projects" className="py-[2vh] sm:py-[4vh] md:py-[6vh] lg:py-[8vh] px-[4vw] sm:px-[2vw] xl:px-[8vw] bg-[#f6f0e6]">
