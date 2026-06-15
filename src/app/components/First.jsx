@@ -216,7 +216,7 @@ const First = () => {
             FastAPI and Flask backends, TensorFlow and PyTorch models, React and Next.js 
             frontends, Docker containers, cloud deployments. Throw in some Three.js when 
             things need to look good, and Tableau or Power BI when the data needs to speak 
-            for itself. Not chasing titles — just looking for work that's worth showing up for.
+            for itself. Not chasing titles — just looking for work that&apos;s worth showing up for.
           </motion.p>
 
           {/* CTA buttons — fade in last */}
