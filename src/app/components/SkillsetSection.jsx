@@ -1,154 +1,373 @@
-"use client";
-import React, { useState } from 'react';
+'use client';
+
+// ─────────────────────────────────────────────────────────────
+// SkillsetSection.jsx — complete redesign
+//
+// Layout:
+//  - Four category tabs across the top
+//  - LEFT: skill pills grid — each pill shows name + confidence %
+//    Hovering a pill highlights it and pulses slightly
+//  - RIGHT: Radar/spider chart built with SVG — no external chart lib needed.
+//    Each axis = one skill. Polygon animates in when tab changes.
+//    Hovering a pill on the left highlights its axis on the chart.
+//
+// Animations:
+//  - Tab switch: pills stagger in from below, chart polygon morphs
+//  - Pill hover: scale up + maroon glow, matching axis on chart brightens
+//  - Section enter: whole section fades up on scroll
+//
+// No Java, no R, no TypeScript — only what Shubhranshu actually knows.
+// ─────────────────────────────────────────────────────────────
+
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const skillsetList = [
+// ── Skill categories ──────────────────────────────────────────
+const categories = [
   {
-    id: "slide1",
-    title: "Programming Languages",
-    items: ["Python", "Javascript", "Java", "R"],
+    id: 'languages',
+    label: 'Languages',
+    color: '#5e2a3a',
+    skills: [
+      { name: 'Python',     level: 95 },
+      { name: 'JavaScript', level: 75 },
+      { name: 'HTML',       level: 95 },
+      { name: 'CSS',        level: 95 },
+    ],
   },
   {
-    id: "slide2",
-    title: "Machine Learning",
-    items: ["Tensorflow", "Pytorch", "Pandas", "NLTK", "Keras", "NumPy",  "Scikit-Learn"],
+    id: 'ml',
+    label: 'ML / DL',
+    color: '#5e2a3a',
+    skills: [
+      { name: 'TensorFlow',   level: 80 },
+      { name: 'PyTorch',      level: 70 },
+      { name: 'Keras',        level: 80 },
+      { name: 'NumPy',        level: 85 },
+      { name: 'Pandas',       level: 80 },
+      { name: 'Scikit-Learn', level: 70 },
+      { name: 'OpenCV',       level: 65 },
+    ],
   },
   {
-    id: "slide3",
-    title: "Web Development",
-    items: ["Next.JS", "React.JS", "HTML", "Node.JS", "TailwindCSS", "SCSS", "CSS"],
+    id: 'web',
+    label: 'Web & Backend',
+    color: '#5e2a3a',
+    skills: [
+      { name: 'React',      level: 80 },
+      { name: 'Next.js',    level: 75 },
+      { name: 'Node.js',    level: 65 },
+      { name: 'FastAPI',    level: 70 },
+      { name: 'Flask',      level: 70 },
+      { name: 'TailwindCSS',level: 80 },
+      { name: 'SCSS',       level: 65 },
+    ],
   },
   {
-    id: "slide4",
-    title: "Concepts",
-    items: ["GNN", "CNN", "U-Net", "NLP", "Preprocessing", "SEO-Optimization", "Responsive Design"],
-  }
+    id: 'data',
+    label: 'Data & Tools',
+    color: '#5e2a3a',
+    skills: [
+      { name: 'MySQL',      level: 90 },
+      { name: 'PostgreSQL', level: 75 },
+      { name: 'MS Excel',   level: 75 },
+      { name: 'Tableau',    level: 70 },
+      { name: 'Power BI',   level: 65 },
+      { name: 'Docker',     level: 60 },
+      { name: 'HuggingFace',level: 65 },
+    ],
+  },
 ];
 
-const combinedDescription = "Adept in programming languages (Python, JavaScript, Java, R) for versatile software development and data analysis. I utilize Machine Learning tools (TensorFlow, PyTorch, Pandas, NLTK, Keras, NumPy, Scikit-Learn) for predictive modeling and NLP, alongside Web Development expertise in Next.js, React.js, Node.js, and modern CSS frameworks. My grasp of GNN, CNN, NLP, preprocessing, and SEO optimization delivers cutting-edge, optimized solutions.";
+// ── Radar chart ───────────────────────────────────────────────
+// Pure SVG — no recharts, no d3 needed.
+// Draws concentric polygon rings (grid), axis lines, axis labels,
+// and an animated filled polygon for the skill levels.
+const RadarChart = ({ skills, hoveredSkill }) => {
+  const size    = 280;
+  const cx      = size / 2;
+  const cy      = size / 2;
+  const radius  = 100;
+  const levels  = 4; // concentric rings
+  const n       = skills.length;
 
+  // Convert polar coords to cartesian
+  const toXY = (angle, r) => ({
+    x: cx + r * Math.cos(angle - Math.PI / 2),
+    y: cy + r * Math.sin(angle - Math.PI / 2),
+  });
+
+  // Angles evenly spaced around the circle
+  const angles = skills.map((_, i) => (2 * Math.PI * i) / n);
+
+  // Build the skill polygon points
+  const skillPoints = skills.map((s, i) => toXY(angles[i], (s.level / 100) * radius));
+  const skillPath   = skillPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ') + ' Z';
+
+  // Build grid ring polygons
+  const gridRings = Array.from({ length: levels }, (_, l) => {
+    const r = ((l + 1) / levels) * radius;
+    const pts = angles.map(a => toXY(a, r));
+    return pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ') + ' Z';
+  });
+
+  return (
+    <svg
+      viewBox={`0 0 ${size} ${size}`}
+      className="w-full max-w-[300px] mx-auto"
+      aria-label="Skill radar chart"
+    >
+      {/* Grid rings */}
+      {gridRings.map((d, i) => (
+        <path key={i} d={d} fill="none" stroke="#5e2a3a" strokeOpacity={0.12} strokeWidth={1} />
+      ))}
+
+      {/* Axis lines from centre to each skill */}
+      {angles.map((angle, i) => {
+        const end  = toXY(angle, radius);
+        const isHovered = hoveredSkill === skills[i].name;
+        return (
+          <line
+            key={i}
+            x1={cx} y1={cy}
+            x2={end.x} y2={end.y}
+            stroke="#5e2a3a"
+            strokeOpacity={isHovered ? 0.7 : 0.2}
+            strokeWidth={isHovered ? 2 : 1}
+            className="transition-all duration-200"
+          />
+        );
+      })}
+
+      {/* Skill polygon — animates when skills change */}
+      <motion.path
+        key={skills.map(s => s.name).join(',')}
+        d={skillPath}
+        fill="#5e2a3a"
+        fillOpacity={0.15}
+        stroke="#5e2a3a"
+        strokeWidth={2}
+        strokeOpacity={0.7}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        style={{ transformOrigin: `${cx}px ${cy}px` }}
+      />
+
+      {/* Dots on each skill vertex */}
+      {skillPoints.map((p, i) => {
+        const isHovered = hoveredSkill === skills[i].name;
+        return (
+          <motion.circle
+            key={i}
+            cx={p.x} cy={p.y} r={isHovered ? 5 : 3}
+            fill={isHovered ? '#9c8f75' : '#5e2a3a'}
+            className="transition-all duration-200"
+          />
+        );
+      })}
+
+      {/* Axis labels */}
+      {skills.map((s, i) => {
+        const labelR  = radius + 22;
+        const pos     = toXY(angles[i], labelR);
+        const isHovered = hoveredSkill === s.name;
+        return (
+          <text
+            key={i}
+            x={pos.x} y={pos.y}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fontSize={isHovered ? 11 : 9.5}
+            fontFamily="var(--font-geist-mono)"
+            fill={isHovered ? '#5e2a3a' : '#9c8f75'}
+            className="transition-all duration-200 select-none"
+            fontWeight={isHovered ? 700 : 400}
+          >
+            {s.name}
+          </text>
+        );
+      })}
+
+      {/* Centre dot */}
+      <circle cx={cx} cy={cy} r={3} fill="#5e2a3a" fillOpacity={0.4} />
+
+      {/* % labels on grid rings */}
+      {Array.from({ length: levels }, (_, l) => {
+        const pct = Math.round(((l + 1) / levels) * 100);
+        const r   = ((l + 1) / levels) * radius;
+        return (
+          <text key={l} x={cx + 4} y={cy - r + 4}
+            fontSize={7} fill="#9c8f75" fontFamily="var(--font-geist-mono)"
+            className="select-none">
+            {pct}%
+          </text>
+        );
+      })}
+    </svg>
+  );
+};
+
+// ── Skill pill ────────────────────────────────────────────────
+// Shows skill name + level bar. Hover triggers highlight on chart.
+const SkillPill = ({ skill, onHover, isHovered, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 16 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.35, delay: index * 0.06 }}
+    onMouseEnter={() => onHover(skill.name)}
+    onMouseLeave={() => onHover(null)}
+    className={`cursor-default rounded-xl p-3 border transition-all duration-250
+                ${isHovered
+                  ? 'bg-[#5e2a3a] border-[#5e2a3a] shadow-lg shadow-[#5e2a3a]/25 -translate-y-0.5'
+                  : 'bg-white/50 border-[#5e2a3a]/15 hover:border-[#5e2a3a]/40'
+                }`}
+  >
+    <div className="flex items-center justify-between mb-1.5">
+      <span className={`font-geist-mono text-[0.78rem] font-semibold transition-colors duration-200
+                        ${isHovered ? 'text-white' : 'text-[#1d2e3f]'}`}>
+        {skill.name}
+      </span>
+      <span className={`font-geist-mono text-[0.7rem] transition-colors duration-200
+                        ${isHovered ? 'text-white/80' : 'text-[#9c8f75]'}`}>
+        {skill.level}%
+      </span>
+    </div>
+
+    {/* Confidence bar */}
+    <div className={`h-1 rounded-full overflow-hidden
+                     ${isHovered ? 'bg-white/20' : 'bg-[#5e2a3a]/10'}`}>
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: `${skill.level}%` }}
+        transition={{ duration: 0.6, delay: index * 0.06 + 0.1, ease: 'easeOut' }}
+        className={`h-full rounded-full transition-colors duration-200
+                    ${isHovered ? 'bg-white' : 'bg-[#5e2a3a]'}`}
+      />
+    </div>
+  </motion.div>
+);
+
+// ── Main component ────────────────────────────────────────────
 const SkillsetSection = () => {
-  const [selectedSkill, setSelectedSkill] = useState(skillsetList[0].id);
+  const [activeTab,     setActiveTab]     = useState(categories[0].id);
+  const [hoveredSkill,  setHoveredSkill]  = useState(null);
+  const [hasAnimated,   setHasAnimated]   = useState(false);
+  const sectionRef = useRef(null);
 
-  const paragraphVariants = {
-    hidden: { opacity: 0, x: 50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } },
-    exit: { opacity: 0, x: -50, transition: { duration: 0.3 } }
+  const activeCategory = categories.find(c => c.id === activeTab);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setHasAnimated(true); },
+      { threshold: 0.15 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Reset hovered skill when tab changes
+  const handleTabChange = (id) => {
+    setHoveredSkill(null);
+    setActiveTab(id);
   };
 
   return (
-    <section id="skillset" className="py-[4vh] sm:py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6] min-h-screen font-biz-ud-gothic">
-      {/* Headings */}
-      <div className="relative text-center mb-[2vh]">
-        <h1
-          className="text-[4.375rem] font-bold text-[#e0b0bc] opacity-50"
-          style={{ fontFamily: 'Faktor, Raleway, sans-serif' }}
-        >
+    <motion.section
+      id="skillset"
+      ref={sectionRef}
+      initial={{ opacity: 0, y: 40 }}
+      animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6] overflow-hidden"
+    >
+      {/* Section heading */}
+      <div className="relative text-center mb-[6vh]">
+        <h1 className="text-[4rem] lg:text-[5rem] font-bold text-[#e0b0bc]/50 font-geist select-none">
           SKILLSET
         </h1>
-        <h2
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-[#5e2a3a]"
-          style={{ fontFamily: 'Raleway, sans-serif' }}
-        >
+        <h2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                       text-[2rem] lg:text-[2.5rem] font-bold text-[#5e2a3a] font-geist whitespace-nowrap">
           My Skills
         </h2>
       </div>
 
-      {/* Two-Column Layout */}
-      <div className="max-w-[80rem]  mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Skillset List */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.5 }}
-          className="text-[0.7rem]  sm:text-[1rem] xl:text-[1.5rem]"
-        >
-          <style>
-            {`
-              .gradient-bg {
-                background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-                background-size: 400% 400%;
-                animation: gradient 15s ease infinite;
-                filter: opacity(0.8);
-              }
-
-              @keyframes gradient {
-                0% {
-                  background-position: 0% 50%;
-                }
-                50% {
-                  background-position: 100% 50%;
-                }
-                100% {
-                  background-position: 0% 50%;
-                }
-              }
-            `}
-          </style>
-          <ul className="p-0 list-none">
-            {skillsetList.map((skill, index) => (
-              <li key={skill.id} className={`item${index + 1} mb-4 relative`}>
-                <input
-                  type="radio"
-                  name="skillset"
-                  id={skill.id}
-                  className="hidden"
-                  checked={selectedSkill === skill.id}
-                  onChange={() => setSelectedSkill(skill.id)}
-                />
-                <label
-                  htmlFor={skill.id}
-                  className="grid grid-cols-[1fr_auto] grid-rows-[auto_auto] gap-2 p-4 rounded-lg border-[2px] border-[#5e2a3a] transition-all duration-350 ease-in-out group hover:bg-[#9c8f75] cursor-pointer relative gradient-bg"
-                  style={{
-                    gridTemplateAreas: '"h4 control" "content content"'
-                  }}
-                >
-                  <h4
-                    className={`text-[1.5rem] font-raleway font-bold h-[1.27em] overflow-hidden transition-all duration-900 ease-in-out group-hover:h-[1.5em] drop-shadow-[0_8px_24px_rgba(255,255,255,0.5)] ${
-                      skill.id === "slide1" || skill.id === "slide4" ? "text-[#3a1a24]" : "text-[#5e2a3a]"
-                    }`}
-                    style={{ gridArea: 'h4', textShadow: '0 0 12px rgba(255, 255, 255, 1)',  }}
-                  >
-                    {skill.title}
-                  </h4>
-                  <span
-                    className="control w-[1.2em] h-[1.2em] bg-[url('https://lidachk.github.io/cssBayan/cssBayan/assets/control.svg')] bg-no-repeat bg-center bg-contain opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:rotate-[450deg] group-hover:drop-shadow-[0_-0.2em_0.5em_#5ed8d8]"
-                    style={{ gridArea: 'control', filter: 'invert(1%) sepia(42%) saturate(1672%) hue-rotate(167deg) brightness(101%) contrast(87%) ', opacity: 0.5 }}
-                  ></span>
-                  <div
-                    className="slider mt-0 overflow-hidden h-0 transition-all duration-900 ease-in-out group-hover:h-[15rem] max-h-[15rem]"
-                    style={{ gridArea: 'content' }}
-                  >
-                    <ul className="mt-4 text-[#222222] font-lato text-[1rem] font-bold list-disc pl-6 drop-shadow-[0_2px_4px_rgba(94,58,42,0.5)] flex flex-col justify-center text-center h-full">
-                      {skill.items.map((item, idx) => (
-                        <li key={idx} className="mb-2" style={{ opacity: 1, textShadow: '0 0 8px rgba(255, 255, 255, 0.9)' }}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* Paragraph Section */}
-        <div className="flex items-center justify-center relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key="combined-paragraph"
-              variants={paragraphVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="p-5 rounded-lg shadow-lg text-[#222222] font-lato text-[1rem] sm:text-[1.2rem] xl:text-[1.2rem] max-w-[30rem] relative z-10"
-            >
-              <p className="relative z-10" style={{ textShadow: '0 0 2px rgba(255, 255, 255, 0.8)' }}>{combinedDescription}</p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+      {/* ── Category tabs ─────────────────────────────────────────
+          Pill-shaped tabs. Active tab gets filled maroon bg.
+          Inactive tabs have maroon border only.
+          A sliding underline follows the active tab.
+      ─────────────────────────────────────────────────────────── */}
+      <div className="flex flex-wrap gap-2 justify-center mb-8">
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => handleTabChange(cat.id)}
+            className={`relative px-5 py-2 rounded-full font-geist text-[0.85rem] font-semibold
+                        border-2 transition-all duration-300
+                        ${activeTab === cat.id
+                          ? 'bg-[#5e2a3a] border-[#5e2a3a] text-white shadow-md shadow-[#5e2a3a]/25'
+                          : 'bg-transparent border-[#5e2a3a]/30 text-[#5e2a3a] hover:border-[#5e2a3a] hover:bg-[#5e2a3a]/5'
+                        }`}
+          >
+            {cat.label}
+            {/* Active indicator dot */}
+            {activeTab === cat.id && (
+              <motion.span
+                layoutId="activeTab"
+                className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#9c8f75]"
+              />
+            )}
+          </button>
+        ))}
       </div>
-    </section>
+
+      {/* ── Main content: pills left, chart right ────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-5xl mx-auto">
+
+        {/* Pills grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="grid grid-cols-2 gap-3"
+          >
+            {activeCategory.skills.map((skill, i) => (
+              <SkillPill
+                key={skill.name}
+                skill={skill}
+                index={i}
+                onHover={setHoveredSkill}
+                isHovered={hoveredSkill === skill.name}
+              />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Radar chart */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab + '-chart'}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.4 }}
+            className="flex flex-col items-center gap-3"
+          >
+            <RadarChart
+              skills={activeCategory.skills}
+              hoveredSkill={hoveredSkill}
+            />
+            {/* Hint text */}
+            <p className="text-[#9c8f75] text-[0.75rem] font-geist-mono text-center">
+              hover a skill to highlight its axis
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </motion.section>
   );
 };
 

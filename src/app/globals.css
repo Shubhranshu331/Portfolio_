@@ -2,26 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─────────────────────────────────────────────────────────────
+   globals.css  —  Base styles for the entire portfolio
+   
+   Font strategy:
+    • var(--font-geist)      → Geist VF  — headings, display, nav title
+    • var(--font-geist-mono) → Geist Mono — skill tags, code labels
+    • 'Lato' (Google Fonts)  → body text, paragraphs, buttons
+   
+   Color tokens:
+    --background  cream base
+    --foreground  near-black for body text
+    --heading     dark navy for headings
+    --cta-border  maroon — primary accent
+    --cta-hover   warm tan — hover/secondary accent
+    --icon-detail dark grey for icon strokes
+───────────────────────────────────────────────────────────────*/
+
 :root {
-  --background: #f6f0e6;
-  --foreground: #171717;
-  --heading: #1d2e3f;
-  --cta-border: #5e2a3a;
-  --cta-hover: #9c8f75;
+  --background:  #f6f0e6;
+  --foreground:  #171717;
+  --heading:     #1d2e3f;
+  --cta-border:  #5e2a3a;
+  --cta-hover:   #9c8f75;
   --icon-detail: #222222;
 }
 
+/* ── Base element styles ──────────────────────────────────────
+   body gets Lato for warm, readable paragraph text.
+   Geist is set as fallback so unclassed text still looks clean.
+───────────────────────────────────────────────────────────────*/
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Lato', Arial, Helvetica, sans-serif;
+  font-family: 'Lato', var(--font-geist), Arial, Helvetica, sans-serif;
 }
 
+/* ── Headings use Geist VF ────────────────────────────────────
+   All h1–h6 automatically get Geist — sharp, modern, geometric.
+   No need to add font classes to every heading in the JSX.
+───────────────────────────────────────────────────────────────*/
 h1, h2, h3, h4, h5, h6 {
   color: var(--heading);
-  font-family: 'Raleway', Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist), Arial, Helvetica, sans-serif;
 }
 
+/* ── Utility classes for font access in JSX ──────────────────
+   Use className="font-geist" on any element to apply Geist.
+   Use className="font-geist-mono" for the monospace version.
+   These complement the Tailwind font-['...'] syntax.
+───────────────────────────────────────────────────────────────*/
+.font-geist {
+  font-family: var(--font-geist), Arial, Helvetica, sans-serif;
+}
+
+.font-geist-mono {
+  font-family: var(--font-geist-mono), 'Courier New', monospace;
+}
+
+/* ── CTA (Call-to-Action) button base ────────────────────────
+   Applied via className="call-to-action" on Link/button elements.
+   Handles border, hover colour transitions globally.
+───────────────────────────────────────────────────────────────*/
 .call-to-action {
   border: 2px solid var(--cta-border);
   transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
@@ -33,8 +75,19 @@ h1, h2, h3, h4, h5, h6 {
   color: white;
 }
 
+/* ── Icon and detail colour ──────────────────────────────────*/
 .icon, .detail {
   color: var(--icon-detail);
+}
+
+/* ── Skill tag style ──────────────────────────────────────────
+   Used in SkillsetSection and anywhere tech labels appear.
+   Geist Mono gives them a "code badge" feel.
+───────────────────────────────────────────────────────────────*/
+.skill-tag {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
 }
 
 @layer utilities {
@@ -43,37 +96,27 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Custom Scrollbar for WebKit browsers */
-::-webkit-scrollbar {
-  width: 8px;
-}
+/* ── Custom Scrollbar ─────────────────────────────────────────
+   WebKit (Chrome, Edge, Safari)
+───────────────────────────────────────────────────────────────*/
+::-webkit-scrollbar        { width: 8px; }
+::-webkit-scrollbar-track  { background: #e8e1d5; border-radius: 4px; }
+::-webkit-scrollbar-thumb  { background: #aca079; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #9c8f75; }
 
-::-webkit-scrollbar-track {
-  background: #e8e1d5;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #aca079;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #9c8f75;
-}
-
-/* Basic scrollbar styling for Firefox */
+/* Firefox */
 html {
   scrollbar-color: #aca079 #e8e1d5;
   scrollbar-width: thin;
 }
 
-/* Carousel Styles */
+/* ── Carousel styles ──────────────────────────────────────────
+   Used in ProjectSection and InternshipsSection.
+   font-family updated to use Geist for card headings.
+───────────────────────────────────────────────────────────────*/
 @layer demo {
   .carousel {
-    --items:
-
- 5;
+    --items: 5;
     --carousel-duration: 40s;
     @media (width > 600px) {
       --carousel-duration: 30s;
@@ -117,7 +160,8 @@ html {
     border-radius: 10px;
     background: white;
     color: var(--foreground);
-    font-family: 'Lato', sans-serif;
+    /* Lato for card body text */
+    font-family: 'Lato', var(--font-geist), sans-serif;
 
     will-change: transform;
     animation-name: marquee;
@@ -155,12 +199,13 @@ html {
     font-size: 0.8rem;
   }
 
+  /* Card headings use Geist for a sharper look */
   .carousel > article h2 {
     font-size: 1.2rem;
     font-weight: 300;
     padding-block: 0.75rem 0.25rem;
     margin: 0;
-    font-family: 'Raleway', sans-serif;
+    font-family: var(--font-geist), Arial, Helvetica, sans-serif;
     color: var(--heading);
     text-align: justify;
   }
