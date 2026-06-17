@@ -4,7 +4,7 @@ import First from "./components/First";
 import Navbar from "./components/Navbar";
 import AboutSection from "./components/AboutSection";
 import SkillsetSection from "./components/SkillsetSection";
-import InternshipsSection from "./components/InternshipsSection";
+import InternshipsSection from "./components/CertificationsSection";
 import ProjectSection from "./components/ProjectSection";
 import EducationSection from "./components/EducationSection";
 
