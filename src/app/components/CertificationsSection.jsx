@@ -3,26 +3,25 @@
 // ─────────────────────────────────────────────────────────────
 // CertificationsSection.jsx
 //
-// A fully manual, draggable carousel — no auto-scroll, no waiting.
-// Shows 2-3 cards depending on screen size. Navigate via:
-//   - Left/Right arrow buttons
-//   - Drag/swipe directly on the cards (mouse or touch)
+// Carousel with BOTH auto-scroll AND manual control:
+//   - Auto-advances every 3.5s (marquee-style, one card at a time)
+//   - Auto-scroll PAUSES the moment the user hovers or drags
+//   - Resumes auto-scroll a couple seconds after they let go
+//   - Left/Right arrows + drag/swipe still fully functional
 //
-// Built with Framer Motion's drag constraints + velocity-based
-// "snap to nearest card" logic — feels like a native carousel,
-// not a flaky CSS scroll-snap hack.
+// Image fix: object-contain instead of object-cover so cert
+// images are never cropped — they shrink/fit inside the box
+// with a soft background fill behind any empty space.
 //
-// Clicking a card image opens the certificate PDF in a modal,
-// same pattern as InternshipsSection for consistency.
+// Clicking a card image opens the certificate PDF in a modal.
 // ─────────────────────────────────────────────────────────────
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EyeIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 // ── Certification data ────────────────────────────────────────
-// 6 real certifications. No Excel cert (confirmed not held).
 const certifications = [
   {
     id: 1,
@@ -81,21 +80,22 @@ const certifications = [
 ];
 
 // ── Single certification card ─────────────────────────────────
+// object-contain ensures the full certificate is always visible,
+// never cropped. bg-[#5e2a3a]/5 fills any letterboxed empty space.
 const CertCard = ({ cert, onView }) => (
   <div className="w-full h-full flex flex-col bg-white rounded-xl border border-[#5e2a3a]/15
                   shadow-md overflow-hidden select-none">
-    {/* Image with hover-to-reveal eye icon */}
-    <div className="relative group h-[160px] shrink-0 bg-[#5e2a3a]/5">
+    <div className="relative group h-[180px] shrink-0 bg-[#5e2a3a]/5 flex items-center justify-center">
       <Image
         src={cert.image}
         alt={`${cert.title} certificate`}
         fill
-        className="object-cover transition-opacity duration-300 group-hover:opacity-60 pointer-events-none"
+        className="object-contain p-2 transition-opacity duration-300 group-hover:opacity-60 pointer-events-none"
         draggable={false}
       />
       <button
         onClick={(e) => { e.stopPropagation(); onView(cert.pdf); }}
-        onPointerDown={(e) => e.stopPropagation()} // prevents drag from hijacking the click
+        onPointerDown={(e) => e.stopPropagation()}
         className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100
                    transition-opacity duration-300 bg-white/90 p-2 rounded-full shadow-md z-20"
         aria-label="View certificate PDF"
@@ -104,7 +104,6 @@ const CertCard = ({ cert, onView }) => (
       </button>
     </div>
 
-    {/* Text content */}
     <div className="flex flex-col flex-1 p-4 gap-1.5">
       <span className="font-geist-mono text-[0.68rem] text-[#9c8f75] uppercase tracking-wider">
         {cert.issuer} · {cert.date}
@@ -129,13 +128,14 @@ const CertCard = ({ cert, onView }) => (
 const CertificationsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [zoomedPdf,   setZoomedPdf]   = useState(null);
-  const containerRef = useRef(null);
+  const [isPaused,    setIsPaused]    = useState(false); // true while hovering/dragging
+  const containerRef  = useRef(null);
+  const autoplayRef   = useRef(null);
+  const resumeTimerRef = useRef(null);
 
-  // How many cards are visible at once — responsive via CSS,
-  // but we use a fixed JS value for drag-snap math (3 on desktop).
   const [cardsPerView, setCardsPerView] = useState(3);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateCardsPerView = () => {
       if (window.innerWidth < 640)  setCardsPerView(1);
       else if (window.innerWidth < 1024) setCardsPerView(2);
@@ -148,26 +148,48 @@ const CertificationsSection = () => {
 
   const maxIndex = Math.max(0, certifications.length - cardsPerView);
 
-  const goNext = () => setActiveIndex((i) => Math.min(i + 1, maxIndex));
+  const goNext = useCallback(() => {
+    setActiveIndex((i) => (i >= maxIndex ? 0 : i + 1)); // loops back to start
+  }, [maxIndex]);
+
   const goPrev = () => setActiveIndex((i) => Math.max(i - 1, 0));
 
-  // ── Drag handling ──────────────────────────────────────────
-  // On drag end, look at how far + how fast the user dragged.
-  // If it crosses a threshold, snap to the next/prev card.
-  // Otherwise snap back to the current one.
+  // ── Auto-scroll (marquee-style) ───────────────────────────
+  // Advances one card every 3.5s. Cleared whenever isPaused is true.
+  useEffect(() => {
+    if (isPaused) return;
+    autoplayRef.current = setInterval(() => {
+      goNext();
+    }, 2500);
+    return () => clearInterval(autoplayRef.current);
+  }, [isPaused, goNext]);
+
+  // ── Pause on hover, resume 2s after mouse leaves ──────────
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+  };
+  const handleMouseLeave = () => {
+    resumeTimerRef.current = setTimeout(() => setIsPaused(false), 800);
+  };
+
+  // ── Drag handling — also pauses autoplay during the drag ──
+  const handleDragStart = () => setIsPaused(true);
+
   const handleDragEnd = (event, info) => {
-    const threshold = 80;       // px — minimum drag distance to trigger a slide
-    const velocityThreshold = 500; // px/s — fast flick also triggers a slide
+    const threshold = 80;
+    const velocityThreshold = 500;
 
     if (info.offset.x < -threshold || info.velocity.x < -velocityThreshold) {
       goNext();
     } else if (info.offset.x > threshold || info.velocity.x > velocityThreshold) {
       goPrev();
     }
-    // else: snaps back automatically because x is driven by activeIndex
+    // Resume autoplay 2s after the user lets go of a drag
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = setTimeout(() => setIsPaused(false), 2000);
   };
 
-  // Card width percentage based on how many are visible
   const cardWidthPercent = 100 / cardsPerView;
 
   return (
@@ -175,7 +197,7 @@ const CertificationsSection = () => {
       id="certifications"
       className="py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6] overflow-hidden"
     >
-      {/* Section heading — same watermark style as other sections */}
+      {/* Section heading */}
       <div className="relative text-center mb-[6vh]">
         <h1 className="text-[2.5rem] sm:text-[3.5rem] lg:text-[4.375rem] font-bold text-[#e0b0bc] opacity-50 font-geist select-none">
           CERTIFICATIONS
@@ -187,11 +209,14 @@ const CertificationsSection = () => {
       </div>
 
       {/* ── Carousel container ─────────────────────────────────── */}
-      <div className="relative max-w-6xl mx-auto">
-
+      <div
+        className="relative max-w-6xl mx-auto"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         {/* Prev / Next buttons */}
         <button
-          onClick={goPrev}
+          onClick={() => { goPrev(); handleMouseEnter(); handleMouseLeave(); }}
           disabled={activeIndex === 0}
           className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-5 z-30
                       w-10 h-10 rounded-full flex items-center justify-center
@@ -203,28 +228,28 @@ const CertificationsSection = () => {
         </button>
 
         <button
-          onClick={goNext}
-          disabled={activeIndex >= maxIndex}
-          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-5 z-30
-                      w-10 h-10 rounded-full flex items-center justify-center
-                      bg-white shadow-md border border-[#5e2a3a]/20 transition-all duration-200
-                      ${activeIndex >= maxIndex ? 'opacity-30 cursor-not-allowed' : 'hover:bg-[#5e2a3a] hover:text-white text-[#5e2a3a]'}`}
+          onClick={() => { goNext(); handleMouseEnter(); handleMouseLeave(); }}
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-5 z-30
+                     w-10 h-10 rounded-full flex items-center justify-center
+                     bg-white shadow-md border border-[#5e2a3a]/20 transition-all duration-200
+                     hover:bg-[#5e2a3a] hover:text-white text-[#5e2a3a]"
           aria-label="Next certificate"
         >
           <ChevronRightIcon className="w-5 h-5" />
         </button>
 
-        {/* Draggable track — overflow hidden viewport */}
+        {/* Draggable track */}
         <div className="overflow-hidden px-2" ref={containerRef}>
           <motion.div
             drag="x"
-            dragConstraints={{ left: 0, right: 0 }} // we control position via animate, not free drag
+            dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.15}
+            onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             animate={{ x: `-${activeIndex * cardWidthPercent}%` }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="flex cursor-grab active:cursor-grabbing"
-            style={{ touchAction: 'pan-y' }} // allows vertical page scroll on touch while still dragging horizontally
+            style={{ touchAction: 'pan-y' }}
           >
             {certifications.map((cert) => (
               <div
@@ -238,7 +263,7 @@ const CertificationsSection = () => {
           </motion.div>
         </div>
 
-        {/* ── Dot indicators ──────────────────────────────────── */}
+        {/* Dot indicators */}
         <div className="flex justify-center gap-2 mt-6">
           {Array.from({ length: maxIndex + 1 }, (_, i) => (
             <button
@@ -253,13 +278,11 @@ const CertificationsSection = () => {
 
         {/* Hint text */}
         <p className="text-center text-[#9c8f75] text-[0.75rem] font-geist-mono mt-3">
-          drag, swipe, or use the arrows
+          drag, swipe, or use the arrows — hover to pause
         </p>
       </div>
 
-      {/* ── PDF Modal ───────────────────────────────────────────
-          Same pattern as InternshipsSection for consistency.
-      ─────────────────────────────────────────────────────────── */}
+      {/* ── PDF Modal ─────────────────────────────────────────── */}
       <AnimatePresence>
         {zoomedPdf && (
           <motion.div
