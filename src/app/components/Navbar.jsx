@@ -151,7 +151,7 @@ const Navbar = () => {
       if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
-        { threshold: 0.35 }
+        { threshold: 0, rootMargin: '-80px 0px -50% 0px' }
       );
       obs.observe(el);
       observers.push(obs);
