@@ -65,7 +65,7 @@ const EducationSection = () => {
     // Main section with fade-in animation
     <motion.section
       id="education"
-      className="py-[2vh] sm:py-[4vh] md:py-[6vh] lg:py-[8vh] px-[4vw] sm:px-[2vw] xl:px-[8vw] bg-[#f6f0e6]/85 overflow-hidden"
+      className="py-[2vh] sm:py-[4vh] md:py-[6vh] lg:py-[8vh] px-[4vw] sm:px-[2vw] xl:px-[8vw] bg-[#f6f0e6]/99 "
       initial="hidden" // Start with hidden state
       animate="visible" // Animate to visible state when the page loads
       variants={variants} // Use the defined variants for animation
@@ -97,7 +97,7 @@ const EducationSection = () => {
       {/* Timeline Container */}
       <div
         id="timeline"
-        className="w-full sm:w-[40rem] h-auto min-h-[10rem] sm:min-h-[3rem] my-[2.5rem] mx-auto relative bg-[var(--background)] md:bg-[url('http://www.csslab.cl/ejemplos/timelinr/latest/images/dot.gif')] bg-[length:0.5rem_0.5rem] bg-[position:6.25rem_top] bg-repeat-y flex flex-col sm:flex-row"
+        className="w-full sm:w-[40rem] h-auto min-h-[10rem] sm:min-h-[3rem] my-[2.5rem] mx-auto relative bg-[#f6f0e6]/99 md:bg-[url('http://www.csslab.cl/ejemplos/timelinr/latest/images/dot.gif')] bg-[length:0.5rem_0.5rem] bg-[position:6.25rem_top] bg-repeat-y flex flex-col sm:flex-row"
       >
         {/* Dates List - Contains the buttons for each year */}
         <ul id="dates" className="w-full sm:w-[5.25rem] h-[9rem] sm:h-[3rem] flex sm:flex-col justify-between sm:justify-start ">

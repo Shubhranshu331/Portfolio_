@@ -45,7 +45,7 @@ const EmailSection = () => {
 
   return (
     <section id="contact">
-      <div className="relative grid md:grid-cols-2 my-12 md:my-12 py-20 gap-4 py-[4vh] sm:py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]/85">
+      <div className="relative grid md:grid-cols-2 my-12 md:my-12 py-20 gap-4 py-[4vh] sm:py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]/99">
         <div className="z-10">
           <h3 className=" text-5xl font-bold text-[#5e2a3a] mb-[6vh] font-raleway text-center">Let&apos;s Connect !!</h3>
           <br />
