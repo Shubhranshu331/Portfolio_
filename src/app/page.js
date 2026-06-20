@@ -7,6 +7,7 @@ import SkillsetSection from "./components/SkillsetSection";
 import InternshipsSection from "./components/CertificationsSection";
 import ProjectSection from "./components/ProjectSection";
 import EducationSection from "./components/EducationSection";
+import BackgroundCanvas from "./components/BackgroundCanvas";
 
 import EmailSection from "./components/EmailSection";
 // import AchievementsSection from "./components/AchievementsSection";
@@ -16,6 +17,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-[#f6f0e6] text-[#222222] font-lato">
       <Navbar />
+      <BackgroundCanvas />
       <div className="container mt-24 mx-auto py-4 px-12">
         <LoadingLogo />
         <First />

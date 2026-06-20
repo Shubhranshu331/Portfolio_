@@ -65,7 +65,7 @@ const EducationSection = () => {
     // Main section with fade-in animation
     <motion.section
       id="education"
-      className="py-[2vh] sm:py-[4vh] md:py-[6vh] lg:py-[8vh] px-[4vw] sm:px-[2vw] xl:px-[8vw] bg-[var(--background)]"
+      className="py-[2vh] sm:py-[4vh] md:py-[6vh] lg:py-[8vh] px-[4vw] sm:px-[2vw] xl:px-[8vw] bg-[#f6f0e6]/85 overflow-hidden"
       initial="hidden" // Start with hidden state
       animate="visible" // Animate to visible state when the page loads
       variants={variants} // Use the defined variants for animation

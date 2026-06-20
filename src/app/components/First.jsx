@@ -36,7 +36,7 @@ const First = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-start pt-[40px] pb-[4vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6] overflow-hidden"
+      className="relative min-h-screen flex items-start pt-[40px] pb-[4vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]/85 overflow-hidden"
     >
 
       {/* ── BACKGROUND: dot grid ────────────────────────────────────────

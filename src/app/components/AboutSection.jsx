@@ -241,7 +241,7 @@ const AboutSection = () => {
     <section
       id="about"
       ref={sectionRef}
-      className="py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6] overflow-hidden"
+      className="py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]/85 overflow-hidden"
     >
       {/* Section heading — watermark style */}
       <div className="relative text-center mb-[6vh]">

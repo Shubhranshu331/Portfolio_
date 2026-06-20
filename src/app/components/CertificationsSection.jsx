@@ -195,7 +195,7 @@ const CertificationsSection = () => {
   return (
     <section
       id="certifications"
-      className="py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6] overflow-hidden"
+      className="py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]/85 overflow-hidden"
     >
       {/* Section heading */}
       <div className="relative text-center mb-[6vh]">

@@ -3,31 +3,28 @@
 //
 // Font setup:
 //  • GeistVF    → registered as 'geist' via next/font/local
-//                 Used for ALL headings (h1–h6) and display text
+//                 Used for ALL headings and display text
 //  • GeistMono  → registered as 'geist-mono' via next/font/local
 //                 Used for skill tags, code labels, tech snippets
 //  • Lato       → loaded via Google Fonts in _document.js
 //                 Used for body text, paragraphs, buttons
 //
-// Both Geist fonts are self-hosted from /src/app/fonts/
-// so they work offline and don't need an external request.
-//
-// CSS variables --font-geist and --font-geist-mono are injected
-// into <html> so globals.css and any component can reference them.
+// BackgroundCanvas sits here so the constellation animation
+// persists across ALL sections without remounting on scroll.
+// It is fixed to the viewport at z-0, pointer-events-none.
 // ─────────────────────────────────────────────────────────────
 
 import localFont from 'next/font/local';
+import BackgroundCanvas from './components/BackgroundCanvas';
 import './globals.css';
 
-// Register GeistVF — variable font, supports all weights 100–900
 const geist = localFont({
   src: './fonts/GeistVF.woff',
-  variable: '--font-geist',       // CSS variable name
-  display: 'swap',                // show fallback font while loading
-  weight: '100 900',              // full weight range available
+  variable: '--font-geist',
+  display: 'swap',
+  weight: '100 900',
 });
 
-// Register GeistMono — for technical/code-style text
 const geistMono = localFont({
   src: './fonts/GeistMonoVF.woff',
   variable: '--font-geist-mono',
@@ -46,10 +43,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // Attach both font CSS variables to <html> so the entire
-    // document tree can access var(--font-geist) and var(--font-geist-mono)
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body className="relative">
+        {/* Constellation background — fixed, behind everything, never blocks clicks */}
+        <BackgroundCanvas />
+        {/* Page content sits above the canvas via relative + z-10 on sections */}
+        <div className="relative z-10">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

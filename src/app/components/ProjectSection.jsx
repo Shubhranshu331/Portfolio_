@@ -374,7 +374,7 @@ const ProjectsSection = () => {
       initial={{ opacity: 0, y: 40 }}
       animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6] overflow-hidden"
+      className="py-[8vh] px-[2vw] xl:px-[8vw] bg-[#f6f0e6]/85 overflow-hidden"
     >
       {/* Section heading */}
       <div className="relative text-center mb-[5vh]">
