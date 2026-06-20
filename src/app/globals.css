@@ -34,7 +34,7 @@
 ───────────────────────────────────────────────────────────────*/
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: transparent;
   font-family: 'Lato', var(--font-geist), Arial, Helvetica, sans-serif;
 }
 
